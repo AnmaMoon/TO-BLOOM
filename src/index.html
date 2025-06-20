@@ -46,7 +46,8 @@
             <p id="register-error" style="color:red;display:none;"></p>
         </div>
     </div>
-    <div id="personaliza-panel" class="auth-form" style="display:none">
+    <!-- Quitar bienestar mental de panel de opciones y configuración -->
+    <div id="personaliza_panel" class="auth-form" style="display:none">
         <h2>Personaliza tu experiencia</h2>
         <form>
             <h3>Nutrición</h3>
@@ -105,6 +106,11 @@
                 <li><button class="side-link" data-section="perfil">Perfil</button></li>
                 <li><button class="side-link" data-section="buscador">Buscador</button></li>
                 <li><button class="side-link" data-section="configuracion">Configuración</button></li>
+                <li><button class="side-link" data-section="productos">Productos</button></li>
+                <li><button class="side-link" data-section="proveedores">Proveedores</button></li>
+                <li><button class="side-link" data-section="pedidos">Pedidos</button></li>
+                <li><button class="side-link" data-section="recetas">Recetas</button></li>
+                <li><button class="side-link" data-section="rutinas">Rutinas</button></li>
             </ul>
         </aside>
         <main>
@@ -335,16 +341,39 @@
                 <div id="config-panel">
                     <h3>Editar preferencias de cuidado personal</h3>
                     <form id="edit-preferencias-form">
-                        <h4>Salud física</h4>
-                        <label><input type="checkbox" name="opciones" value="alimentacion"> Alimentación saludable</label><br>
-                        <label><input type="checkbox" name="opciones" value="ejercicio"> Ejercicio físico</label><br>
-                        <label><input type="checkbox" name="opciones" value="descanso"> Descanso y sueño</label><br>
-                        <h4>Salud mental y emocional</h4>
-                        <label><input type="checkbox" name="opciones" value="emocional"> Bienestar emocional</label><br>
-                        <label><input type="checkbox" name="opciones" value="gestion_estres"> Gestión del estrés</label><br>
-                        <h4>Higiene y autocuidado</h4>
-                        <label><input type="checkbox" name="opciones" value="higiene"> Higiene personal</label><br>
-                        <label><input type="checkbox" name="opciones" value="autocuidado"> Autocuidado diario</label><br>
+                        <h4>Nutrición</h4>
+                        <label><input type="checkbox" name="opciones" value="deficiencias"> Deficiencias nutricionales</label><br>
+                        <label><input type="checkbox" name="opciones" value="sobrepeso"> Sobrepeso u obesidad</label><br>
+                        <label><input type="checkbox" name="opciones" value="desnutricion"> Desnutrición</label><br>
+                        <label><input type="checkbox" name="opciones" value="alergias"> Alergias alimentarias</label><br>
+                        <label><input type="checkbox" name="opciones" value="intolerancias"> Intolerancias alimentarias</label><br>
+                        <label><input type="checkbox" name="opciones" value="deshidratacion"> Deshidratación</label><br>
+                        <label><input type="checkbox" name="opciones" value="digestivos"> Problemas de digestión</label><br>
+                        <h4>Cabello</h4>
+                        <label><input type="checkbox" name="opciones" value="caida"> Caída del cabello</label><br>
+                        <label><input type="checkbox" name="opciones" value="seco"> Cabello seco y quebradizo</label><br>
+                        <label><input type="checkbox" name="opciones" value="grasoso"> Cabello grasoso</label><br>
+                        <label><input type="checkbox" name="opciones" value="caspa"> Caspa</label><br>
+                        <label><input type="checkbox" name="opciones" value="calor"> Cabello dañado por el calor</label><br>
+                        <label><input type="checkbox" name="opciones" value="tenido"> Cabello teñido o decolorado</label><br>
+                        <label><input type="checkbox" name="opciones" value="encrespado"> Cabello encrespado</label><br>
+                        <label><input type="checkbox" name="opciones" value="alopecia"> Alopecia</label><br>
+                        <h4>Piel</h4>
+                        <label><input type="checkbox" name="opciones" value="acne"> Acné</label><br>
+                        <label><input type="checkbox" name="opciones" value="seca"> Piel seca</label><br>
+                        <label><input type="checkbox" name="opciones" value="grasosa"> Piel grasosa</label><br>
+                        <label><input type="checkbox" name="opciones" value="hiperpigmentacion"> Hiperpigmentación</label><br>
+                        <label><input type="checkbox" name="opciones" value="arrugas"> Arrugas y líneas finas</label><br>
+                        <label><input type="checkbox" name="opciones" value="sensibilidad"> Sensibilidad en la piel</label><br>
+                        <label><input type="checkbox" name="opciones" value="eccema"> Eccema</label><br>
+                        <label><input type="checkbox" name="opciones" value="rosacea"> Rosácea</label><br>
+                        <h5>Tipo de piel</h5>
+                        <label><input type="radio" name="tipo_piel" value="normal"> Normal</label>
+                        <label><input type="radio" name="tipo_piel" value="seca"> Seca</label>
+                        <label><input type="radio" name="tipo_piel" value="grasosa"> Grasosa</label>
+                        <label><input type="radio" name="tipo_piel" value="mixta"> Mixta</label>
+                        <label><input type="radio" name="tipo_piel" value="sensible"> Sensible</label>
+                        <br>
                         <button type="submit">Guardar cambios</button>
                     </form>
                     <p id="config-msg" style="color:green;display:none;">Preferencias actualizadas.</p>
@@ -404,6 +433,46 @@
                 <h2>Recomendaciones para ti</h2>
                 <div id="recomendaciones-lista"></div>
             </section>
+            <!-- Sección Productos -->
+            <section id="productos" class="main-section" style="display:none">
+                <h2>Productos</h2>
+                <div class="productos-lista">
+                    <p>Aquí podrás ver, buscar y gestionar todos los productos disponibles en la plataforma.</p>
+                    <div class="placeholder">(Próximamente: gestión avanzada de productos)</div>
+                </div>
+            </section>
+            <!-- Sección Proveedores -->
+            <section id="proveedores" class="main-section" style="display:none">
+                <h2>Proveedores</h2>
+                <div class="proveedores-lista">
+                    <p>Consulta y gestiona los proveedores asociados a los productos.</p>
+                    <div class="placeholder">(Próximamente: gestión avanzada de proveedores)</div>
+                </div>
+            </section>
+            <!-- Sección Pedidos -->
+            <section id="pedidos" class="main-section" style="display:none">
+                <h2>Pedidos</h2>
+                <div class="pedidos-lista">
+                    <p>Visualiza el historial y estado de tus pedidos realizados en la tienda.</p>
+                    <div class="placeholder">(Próximamente: gestión avanzada de pedidos)</div>
+                </div>
+            </section>
+            <!-- Sección Recetas -->
+            <section id="recetas" class="main-section" style="display:none">
+                <h2>Recetas</h2>
+                <div class="recetas-lista">
+                    <p>Descubre, guarda y organiza recetas de nutrición y belleza personalizadas.</p>
+                    <div class="placeholder">(Próximamente: gestión avanzada de recetas)</div>
+                </div>
+            </section>
+            <!-- Sección Rutinas -->
+            <section id="rutinas" class="main-section" style="display:none">
+                <h2>Rutinas</h2>
+                <div class="rutinas-lista">
+                    <p>Organiza y consulta tus rutinas de cuidado personal favoritas.</p>
+                    <div class="placeholder">(Próximamente: gestión avanzada de rutinas)</div>
+                </div>
+            </section>
         </main>
         <footer>
             <p>&copy; 2025 florecer</p>
@@ -419,7 +488,7 @@
     const showLogin = document.getElementById('show-login');
     const loginError = document.getElementById('login-error');
     const registerError = document.getElementById('register-error');
-    const personalizaPanel = document.getElementById('personaliza-panel');
+    const personalizaPanel = document.getElementById('personaliza_panel');
     const continuarBtn = document.getElementById('continuar-btn');
     const registerFormEl = document.querySelector('#register-form form');
 
@@ -581,12 +650,20 @@
     };
     // Al cargar, si keepLogged está activo, mostrar página principal
     window.onload = function() {
+        // Siempre mostrar solo el login al cargar
+        document.getElementById('auth-container').style.display = 'block';
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('register-form').style.display = 'none';
+        document.getElementById('main-content').style.display = 'none';
+        if(document.getElementById('personaliza_panel')) document.getElementById('personaliza_panel').style.display = 'none';
+        // Si keepLogged está activo, mostrar página principal
         const keepLogged = localStorage.getItem('keepLogged') === 'true';
         const loggedUser = localStorage.getItem('loggedUser');
         if(keepLogged && loggedUser && localStorage.getItem('user_' + loggedUser)) {
-            authContainer.style.display = 'none';
-            mainContent.style.display = 'block';
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
         }
+        inicializarSeccionesPropias();
     };
     // Guardar estado de login
     function setLoggedIn(usuario) {
@@ -610,6 +687,7 @@
             menuVisible = false;
         }
     });
+    // Mejorar la lógica de navegación para nuevas secciones
     sideLinks.forEach(btn => {
         btn.addEventListener('click', function() {
             sections.forEach(sec => sec.style.display = 'none');
@@ -971,6 +1049,36 @@
             div.style.display = div.textContent.toLowerCase().includes(val) ? '' : 'none';
         });
     });
+    // Mostrar/ocultar secciones desde menú lateral (ya implementado)
+    // Inicializar contenido de las nuevas secciones (puedes personalizar luego)
+    function inicializarSeccionesPropias() {
+        // Productos
+        document.getElementById('productos-lista').innerHTML = '<p>Aquí verás todos los productos disponibles y podrás gestionarlos.</p>';
+        // Proveedores
+        document.getElementById('proveedores-lista').innerHTML = '<p>Aquí verás los proveedores registrados y sus datos de contacto.</p>';
+        // Pedidos
+        document.getElementById('pedidos-lista').innerHTML = '<p>Aquí aparecerán tus pedidos e historial de compras.</p>';
+        // Recetas
+        document.getElementById('recetas-lista').innerHTML = '<p>Guarda y consulta tus recetas favoritas aquí.</p>';
+        // Rutinas
+        document.getElementById('rutinas-lista').innerHTML = '<p>Organiza y visualiza tus rutinas de cuidado personal aquí.</p>';
+    }
+    window.onload = function() {
+        // Siempre mostrar solo el login al cargar
+        document.getElementById('auth-container').style.display = 'block';
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('register-form').style.display = 'none';
+        document.getElementById('main-content').style.display = 'none';
+        if(document.getElementById('personaliza_panel')) document.getElementById('personaliza_panel').style.display = 'none';
+        // Si keepLogged está activo, mostrar página principal
+        const keepLogged = localStorage.getItem('keepLogged') === 'true';
+        const loggedUser = localStorage.getItem('loggedUser');
+        if(keepLogged && loggedUser && localStorage.getItem('user_' + loggedUser)) {
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+        inicializarSeccionesPropias();
+    };
     </script>
 </body>
 </html>

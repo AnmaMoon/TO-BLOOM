@@ -231,6 +231,68 @@ main {
     font-size: 1.1em;
     text-align: center;
 }
+
+/* Estilos para nuevas secciones */
+#productos, #proveedores, #pedidos, #recetas, #rutinas {
+  padding: 2rem 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin-top: 1.5rem;
+  min-height: 350px;
+}
+#productos h2, #proveedores h2, #pedidos h2, #recetas h2, #rutinas h2 {
+  color: #7b3f00;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.placeholder {
+  background: #f7f7f7;
+  border: 1px dashed #bdbdbd;
+  color: #bdbdbd;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 1.1rem;
+}
+.side-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.side-menu li {
+  margin-bottom: 0.7rem;
+}
+.side-link {
+  background: none;
+  border: none;
+  color: #7b3f00;
+  font-size: 1.1rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  width: 100%;
+  text-align: left;
+}
+.side-link:hover, .side-link.active {
+  background: #ffe5b4;
+  color: #4e260e;
+}
+
+/* Responsive para menú lateral y secciones */
+@media (max-width: 900px) {
+  #productos, #proveedores, #pedidos, #recetas, #rutinas {
+    margin-top: 1rem;
+    padding: 1rem 0.5rem;
+  }
+  .side-link {
+    font-size: 1rem;
+    padding: 0.5rem 0.7rem;
+  }
+}
 @media (max-width: 600px) {
     .main-nav ul {
         flex-direction: column;
