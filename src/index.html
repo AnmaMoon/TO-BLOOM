@@ -22,6 +22,8 @@
             </form>
             <p>¿No tienes cuenta? <a href="#" id="show-register">Regístrate</a></p>
             <p id="login-error" style="color:red;display:none;"></p>
+            <button id="ver-usuarios-btn" type="button" style="margin-top:1rem;">Ver usuarios guardados</button>
+            <div id="usuarios-guardados" style="display:none;margin-top:1rem;background:#f7f7f7;padding:1rem;border-radius:8px;"></div>
         </div>
         <div id="register-form" class="auth-form" style="display:none">
             <h2>Registrarse</h2>
@@ -377,6 +379,47 @@
                         <button type="submit">Guardar cambios</button>
                     </form>
                     <p id="config-msg" style="color:green;display:none;">Preferencias actualizadas.</p>
+                    <hr>
+                    <h3>Opciones de cuenta</h3>
+                    <button id="btn-cambiar-pass">Cambiar contraseña</button>
+                    <div id="cambiar-pass-form" style="display:none;margin:1rem 0;">
+                        <form>
+                            <label>Contraseña actual:<br><input type="password" id="pass-actual" required></label><br>
+                            <label>Nueva contraseña:<br><input type="password" id="pass-nueva" required></label><br>
+                            <label>Repetir nueva contraseña:<br><input type="password" id="pass-nueva2" required></label><br>
+                            <button type="submit">Guardar</button>
+                            <span id="pass-msg" style="color:green;display:none;margin-left:1rem;">Contraseña cambiada</span>
+                            <span id="pass-err" style="color:red;display:none;margin-left:1rem;"></span>
+                        </form>
+                    </div>
+                    <button id="btn-notificaciones">Notificaciones</button>
+                    <div id="notificaciones-form" style="display:none;margin:1rem 0;">
+                        <form>
+                            <label><input type="checkbox" id="notif-email"> Recibir notificaciones por email</label><br>
+                            <label><input type="checkbox" id="notif-push"> Notificaciones push</label><br>
+                            <button type="submit">Guardar</button>
+                            <span id="notif-msg" style="color:green;display:none;margin-left:1rem;">Notificaciones actualizadas</span>
+                        </form>
+                    </div>
+                    <button id="btn-privacidad">Privacidad</button>
+                    <div id="privacidad-form" style="display:none;margin:1rem 0;">
+                        <form>
+                            <label><input type="checkbox" id="priv-perfil"> Perfil visible solo para mí</label><br>
+                            <label><input type="checkbox" id="priv-reseñas"> Ocultar mis reseñas públicas</label><br>
+                            <button type="submit">Guardar</button>
+                            <span id="priv-msg" style="color:green;display:none;margin-left:1rem;">Privacidad actualizada</span>
+                        </form>
+                    </div>
+                    <button id="btn-metodos-pago">Métodos de pago</button>
+                    <div id="pago-form" style="display:none;margin:1rem 0;">
+                        <form>
+                            <label>Nueva tarjeta:<br><input type="text" id="pago-tarjeta" placeholder="**** **** **** 1234"></label><br>
+                            <button type="submit">Guardar</button>
+                            <span id="pago-msg" style="color:green;display:none;margin-left:1rem;">Método guardado</span>
+                        </form>
+                        <div id="pago-lista" style="margin-top:0.5rem;"></div>
+                    </div>
+                    <button id="btn-logout" style="background:#e53935;color:#fff;margin-top:1.5rem;">Cerrar sesión</button>
                 </div>
             </section>
             <!-- Tienda personalizada -->
@@ -428,6 +471,9 @@
                     <button id="guardar-defectos" style="margin-top:0.7rem;">Guardar</button>
                     <span id="defectos-msg" style="color:green;display:none;margin-left:1rem;">Guardado</span>
                 </div>
+                <div id="perfil-publicaciones" style="margin-top:2rem;"></div>
+                <div id="seguidores" style="margin-top:1rem;"></div>
+                <div id="perfil-bio" style="margin-top:1rem;"></div>
             </section>
             <section id="feed-recomendaciones" class="main-section" style="display:none">
                 <h2>Recomendaciones para ti</h2>
@@ -473,6 +519,12 @@
                     <div class="placeholder">(Próximamente: gestión avanzada de rutinas)</div>
                 </div>
             </section>
+            <!-- Buscador global -->
+            <section id="buscador" class="main-section" style="display:none">
+                <h2>Buscador global</h2>
+                <input type="text" id="busqueda-global" placeholder="Buscar usuarios, productos, rutinas o recetas..." style="width:100%;padding:0.5rem;border-radius:4px;border:1px solid #ccc;margin-bottom:1rem;" />
+                <div id="resultados-global"></div>
+            </section>
         </main>
         <footer>
             <p>&copy; 2025 florecer</p>
@@ -506,7 +558,7 @@
         loginForm.style.display = 'block';
         registerError.style.display = 'none';
     };
-    // Guardar usuario
+    // Guardar usuario (solo validación, NO guardar en localStorage aquí)
     registerFormEl.onsubmit = function(e) {
         e.preventDefault();
         // Permitir registro sin datos reales durante 2 minutos
@@ -518,37 +570,21 @@
             localStorage.setItem('test_registro', 'true');
             localStorage.setItem('test_registro_expira', (ahora + 2*60*1000).toString());
         }
-        if (localStorage.getItem('test_registro') === 'true' && Date.now() < parseInt(localStorage.getItem('test_registro_expira'))) {
+        let nombre = document.getElementById('register-nombre').value;
+        let apellidos = document.getElementById('register-apellidos').value;
+        let usuario = document.getElementById('register-user').value;
+        let email = document.getElementById('register-email').value;
+        let password = document.getElementById('register-password').value;
+        let password2 = document.getElementById('register-password2').value;
+        if(localStorage.getItem('test_registro') === 'true' && Date.now() < parseInt(localStorage.getItem('test_registro_expira'))) {
             // Rellenar datos falsos si están vacíos
-            const nombre = document.getElementById('register-nombre').value || 'Test';
-            const apellidos = document.getElementById('register-apellidos').value || 'Usuario';
-            const usuario = document.getElementById('register-user').value || 'testuser' + Math.floor(Math.random()*10000);
-            const email = document.getElementById('register-email').value || 'test'+Math.floor(Math.random()*10000)+'@mail.com';
-            const password = document.getElementById('register-password').value || '1234';
-            const password2 = document.getElementById('register-password2').value || '1234';
-            if(password !== password2) {
-                document.getElementById('register-error').textContent = 'Las contraseñas no coinciden.';
-                document.getElementById('register-error').style.display = 'block';
-                return;
-            }
-            if(localStorage.getItem('user_' + usuario)) {
-                document.getElementById('register-error').textContent = 'El usuario ya existe.';
-                document.getElementById('register-error').style.display = 'block';
-                return;
-            }
-            localStorage.setItem('user_' + usuario, JSON.stringify({nombre, apellidos, usuario, email, password}));
-            document.getElementById('register-error').style.display = 'none';
-            document.getElementById('register-form').style.display = 'none';
-            personalizaPanel.style.display = 'block';
-            return;
+            nombre = nombre || 'Test';
+            apellidos = apellidos || 'Usuario';
+            usuario = usuario || 'testuser' + Math.floor(Math.random()*10000);
+            email = email || 'test'+Math.floor(Math.random()*10000)+'@mail.com';
+            password = password || '1234';
+            password2 = password2 || '1234';
         }
-        // ...registro normal...
-        const nombre = document.getElementById('register-nombre').value;
-        const apellidos = document.getElementById('register-apellidos').value;
-        const usuario = document.getElementById('register-user').value;
-        const email = document.getElementById('register-email').value;
-        const password = document.getElementById('register-password').value;
-        const password2 = document.getElementById('register-password2').value;
         if(password !== password2) {
             document.getElementById('register-error').textContent = 'Las contraseñas no coinciden.';
             document.getElementById('register-error').style.display = 'block';
@@ -559,30 +595,29 @@
             document.getElementById('register-error').style.display = 'block';
             return;
         }
-        localStorage.setItem('user_' + usuario, JSON.stringify({nombre, apellidos, usuario, email, password}));
+        // Guardar datos temporalmente en memoria (no en localStorage)
+        window._registroTemporal = {nombre, apellidos, usuario, email, password};
         document.getElementById('register-error').style.display = 'none';
         document.getElementById('register-form').style.display = 'none';
         personalizaPanel.style.display = 'block';
     };
-    // Guardar preferencias por categoría
+    // Guardar preferencias por categoría y guardar usuario en localStorage aquí
     personalizaPanel.querySelector('form').onsubmit = function(e) {
         e.preventDefault();
-        const usuario = document.getElementById('register-user').value;
+        const temp = window._registroTemporal;
+        if (!temp) return;
         const nutricion = Array.from(document.querySelectorAll('input[name="nutricion"]:checked')).map(cb => cb.value);
         const cabello = Array.from(document.querySelectorAll('input[name="cabello"]:checked')).map(cb => cb.value);
         const piel = Array.from(document.querySelectorAll('input[name="piel"]:checked')).map(cb => cb.value);
         const tipoPiel = document.querySelector('input[name="tipo_piel"]:checked')?.value || '';
-        let userData = JSON.parse(localStorage.getItem('user_' + usuario));
-        userData.nutricion = nutricion;
-        userData.cabello = cabello;
-        userData.piel = piel;
-        userData.tipoPiel = tipoPiel;
-        localStorage.setItem('user_' + usuario, JSON.stringify(userData));
+        let userData = {...temp, nutricion, cabello, piel, tipoPiel};
+        localStorage.setItem('user_' + temp.usuario, JSON.stringify(userData));
         personalizaPanel.style.display = 'none';
         document.getElementById('auth-container').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
-        setLoggedIn(usuario);
+        setLoggedIn(temp.usuario);
         mostrarContenidoPersonalizado(userData);
+        delete window._registroTemporal;
     };
     // Mostrar contenido personalizado según categorías
     function mostrarContenidoPersonalizado(userData) {
@@ -734,6 +769,63 @@
         });
         observer.observe(configSection, { attributes: true, attributeFilter: ['style'] });
     }
+    // --- Unificación de productos/tienda ---
+    // Eliminar sección 'productos' y dejar solo 'tienda', mostrar todos los productos vendibles con buscador, reseñas, calificación y botón de añadir al carrito/pedidos.
+    // --- Unificación de carrito/pedidos ---
+    // Eliminar sección 'pedidos' y dejar solo 'carrito', mostrar compras actuales, historial y estado.
+    // --- Mejorar perfil IG/FB/TikTok ---
+    // Añadir biografía editable, seguidores/seguidos, publicaciones propias, guardadas, rutinas y recetas.
+    function cargarPerfil() {
+        const usuario = localStorage.getItem('loggedUser');
+        if (!usuario) return;
+        const userData = JSON.parse(localStorage.getItem('user_' + usuario));
+        document.getElementById('perfil-usuario').textContent = userData.usuario || '';
+        document.getElementById('perfil-nombre').textContent = userData.nombre || '';
+        document.getElementById('perfil-email').textContent = userData.email || '';
+        // Foto de perfil
+        const foto = userData.fotoPerfil || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.nombre||userData.usuario)}`;
+        document.getElementById('perfil-foto').src = foto;
+        // Biografía editable
+        let bio = userData.bio || '';
+        let bioDiv = document.getElementById('perfil-bio');
+        if(!bioDiv) {
+            bioDiv = document.createElement('div');
+            bioDiv.id = 'perfil-bio';
+            document.getElementById('perfil-info').appendChild(bioDiv);
+        }
+        bioDiv.innerHTML = bio + ' <button id="editar-bio-btn">Editar biografía</button>';
+        document.getElementById('editar-bio-btn').onclick = function() {
+            const nuevoBio = prompt('Edita tu biografía:', bio);
+            if(nuevoBio !== null) {
+                userData.bio = nuevoBio;
+                localStorage.setItem('user_' + usuario, JSON.stringify(userData));
+                cargarPerfil();
+            }
+        };
+        // Seguidores/seguidos (simulado)
+        let seguidores = userData.seguidores || Math.floor(Math.random()*100+10);
+        let seguidos = userData.seguidos || Math.floor(Math.random()*50+5);
+        let segDiv = document.getElementById('seguidores');
+        if(!segDiv) {
+            segDiv = document.createElement('span');
+            segDiv.id = 'seguidores';
+            document.getElementById('perfil-info').appendChild(segDiv);
+        }
+        segDiv.textContent = seguidores + ' seguidores';
+        let seg2Div = document.getElementById('seguidos');
+        if(!seg2Div) {
+            seg2Div = document.createElement('span');
+            seg2Div.id = 'seguidos';
+            document.getElementById('perfil-info').appendChild(seg2Div);
+        }
+        seg2Div.textContent = seguidos + ' seguidos';
+        // Defectos personales (solo local)
+        document.getElementById('defectos-text').value = userData.defectos || '';
+    }
+    // --- Menú lateral hamburguesa ---
+    document.getElementById('menuBtn').innerHTML = '<span style="font-size:2em;line-height:1;">&#9776;</span>';
+    // --- Mejorar experiencia visual y responsiva ---
+    // (Ya implementado en CSS, solo asegurar que las clases y elementos estén presentes y bien estructurados)
     // --- Datos de productos personalizados ---
     const productosTienda = [
         // Nutrición
@@ -914,6 +1006,40 @@
         // Foto de perfil
         const foto = userData.fotoPerfil || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.nombre||userData.usuario)}`;
         document.getElementById('perfil-foto').src = foto;
+        // Biografía editable
+        let bio = userData.bio || '';
+        let bioDiv = document.getElementById('perfil-bio');
+        if(!bioDiv) {
+            bioDiv = document.createElement('div');
+            bioDiv.id = 'perfil-bio';
+            document.getElementById('perfil-info').appendChild(bioDiv);
+        }
+        bioDiv.innerHTML = bio + ' <button id="editar-bio-btn">Editar biografía</button>';
+        document.getElementById('editar-bio-btn').onclick = function() {
+            const nuevoBio = prompt('Edita tu biografía:', bio);
+            if(nuevoBio !== null) {
+                userData.bio = nuevoBio;
+                localStorage.setItem('user_' + usuario, JSON.stringify(userData));
+                cargarPerfil();
+            }
+        };
+        // Seguidores/seguidos (simulado)
+        let seguidores = userData.seguidores || Math.floor(Math.random()*100+10);
+        let seguidos = userData.seguidos || Math.floor(Math.random()*50+5);
+        let segDiv = document.getElementById('seguidores');
+        if(!segDiv) {
+            segDiv = document.createElement('span');
+            segDiv.id = 'seguidores';
+            document.getElementById('perfil-info').appendChild(segDiv);
+        }
+        segDiv.textContent = seguidores + ' seguidores';
+        let seg2Div = document.getElementById('seguidos');
+        if(!seg2Div) {
+            seg2Div = document.createElement('span');
+            seg2Div.id = 'seguidos';
+            document.getElementById('perfil-info').appendChild(seg2Div);
+        }
+        seg2Div.textContent = seguidos + ' seguidos';
         // Defectos personales (solo local)
         document.getElementById('defectos-text').value = userData.defectos || '';
     }
@@ -1019,66 +1145,195 @@
         });
         observerFeed.observe(feedSection, { attributes: true, attributeFilter: ['style'] });
     }
-    // Buscador global para tienda y opciones
-    function mostrarBuscadorGlobal() {
+    // --- Buscador global interactivo ---
+    const buscadorSection = document.getElementById('buscador');
+    const busquedaGlobal = document.createElement('input');
+    busquedaGlobal.type = 'text';
+    busquedaGlobal.id = 'busqueda-global';
+    busquedaGlobal.placeholder = 'Buscar usuarios, productos, rutinas o recetas...';
+    const resultadosGlobal = document.createElement('div');
+    resultadosGlobal.id = 'resultados-global';
+    if(buscadorSection) {
+        buscadorSection.appendChild(busquedaGlobal);
+        buscadorSection.appendChild(resultadosGlobal);
+        busquedaGlobal.addEventListener('input', function() {
+            const val = this.value.toLowerCase();
+            let html = '';
+            // Buscar usuarios
+            const usuarios = Object.keys(localStorage)
+                .filter(k => k.startsWith('user_'))
+                .map(k => JSON.parse(localStorage.getItem(k)));
+            const usuariosFiltrados = usuarios.filter(u => u.usuario.toLowerCase().includes(val) || (u.nombre && u.nombre.toLowerCase().includes(val)));
+            if(usuariosFiltrados.length) {
+                html += '<h3>Usuarios</h3><ul>' + usuariosFiltrados.map(u => `<li><b>${u.usuario}</b> <button onclick="verPerfilBuscado('${u.usuario}')">Ver perfil</button></li>`).join('') + '</ul>';
+            }
+            // Buscar productos
+            const productosFiltrados = productosTienda.filter(p => p.nombre.toLowerCase().includes(val) || p.marca.toLowerCase().includes(val) || p.descripcion.toLowerCase().includes(val));
+            if(productosFiltrados.length) {
+                html += '<h3>Productos</h3>' + productosFiltrados.map(p => `<div class="producto" data-id="${p.id}">${renderProducto(p)}</div>`).join('');
+            }
+            // Rutinas y recetas ficticias
+            const rutinas = getRutinasEjemplo().filter(r => r.titulo.toLowerCase().includes(val) || r.descripcion.toLowerCase().includes(val));
+            if(rutinas.length) {
+                html += '<h3>Rutinas</h3>' + rutinas.map(r => renderPublicacion(r, 'rutina')).join('');
+            }
+            const recetas = getRecetasEjemplo().filter(r => r.titulo.toLowerCase().includes(val) || r.descripcion.toLowerCase().includes(val));
+            if(recetas.length) {
+                html += '<h3>Recetas</h3>' + recetas.map(r => renderPublicacion(r, 'receta')).join('');
+            }
+            resultadosGlobal.innerHTML = html || '<p>No hay resultados.</p>';
+            cargarResenas();
+            cargarInteraccionesFeed();
+        });
+    }
+    function verPerfilBuscado(usuario) {
+        localStorage.setItem('loggedUser', usuario);
+        cargarPerfil();
         document.querySelectorAll('.main-section').forEach(sec => sec.style.display = 'none');
-        document.getElementById('tienda').style.display = 'block';
-        document.getElementById('busqueda-tienda').value = '';
-        document.getElementById('busqueda-tienda').placeholder = 'Buscar por piel, cabello, nutrición, producto, etc...';
-        // Mostrar todos los productos sin filtrar por personalización
-        const cont = document.getElementById('productos-tienda');
-        cont.innerHTML = '';
-        productosTienda.forEach(prod => {
-            cont.innerHTML += renderProducto(prod);
+        document.getElementById('perfil').style.display = 'block';
+    }
+    // --- Feed tipo red social en Inicio (mejorado: likes y guardados reversibles, imágenes/videos) ---
+    function renderPublicacion(pub, tipo, opciones = {}) {
+        // Si tiene imagen o video, mostrarlo
+        let media = '';
+        if(pub.imagen) media = `<img src="${pub.imagen}" alt="${pub.titulo}">`;
+        if(pub.video) media = `<video src="${pub.video}" controls></video>`;
+        // Estado de like y guardado
+        let liked = localStorage.getItem('likes_' + pub.id) === 'true';
+        let guardado = localStorage.getItem('guardado_' + pub.id) === 'true';
+        return `<div class="publicacion" data-id="${pub.id}" data-tipo="${tipo}">
+            <div class="pub-header"><b>@${pub.usuario}</b> <span class="pub-tipo">${tipo==='rutina'?'Rutina':'Receta'}</span></div>
+            <h4>${pub.titulo}</h4>
+            ${media}
+            <p>${pub.descripcion}</p>
+            <div class="pub-actions">
+                <button class="btn-like${liked?' liked':''}">❤️ <span class="like-count"></span></button>
+                <button class="btn-coment">💬</button>
+                <button class="btn-guardar${guardado?' guardado':''}">⭐</button>
+            </div>
+            <div class="pub-comentarios" style="display:none;"></div>
+        </div>`;
+    }
+    function cargarInteraccionesFeed() {
+        document.querySelectorAll('.publicacion').forEach(pubDiv => {
+            const id = pubDiv.dataset.id;
+            // Likes reversibles
+            const btnLike = pubDiv.querySelector('.btn-like');
+            let liked = localStorage.getItem('likes_' + id) === 'true';
+            let likesCount = parseInt(localStorage.getItem('likes_count_' + id) || '0');
+            btnLike.querySelector('.like-count').textContent = likesCount;
+            btnLike.classList.toggle('liked', liked);
+            btnLike.onclick = function() {
+                liked = !liked;
+                localStorage.setItem('likes_' + id, liked);
+                if(liked) likesCount++;
+                else likesCount = Math.max(0, likesCount-1);
+                localStorage.setItem('likes_count_' + id, likesCount);
+                btnLike.querySelector('.like-count').textContent = likesCount;
+                btnLike.classList.toggle('liked', liked);
+                renderPerfilPublicaciones();
+            };
+            // Guardar reversibles
+            const btnGuardar = pubDiv.querySelector('.btn-guardar');
+            let guardado = localStorage.getItem('guardado_' + id) === 'true';
+            btnGuardar.classList.toggle('guardado', guardado);
+            btnGuardar.onclick = function() {
+                guardado = !guardado;
+                localStorage.setItem('guardado_' + id, guardado);
+                btnGuardar.classList.toggle('guardado', guardado);
+                if(guardado) guardarEnCarpeta(id, pubDiv.dataset.tipo);
+                renderPerfilPublicaciones();
+            };
+            // Comentarios
+            const btnComent = pubDiv.querySelector('.btn-coment');
+            btnComent.onclick = function() {
+                const comentariosDiv = pubDiv.querySelector('.pub-comentarios');
+                if(comentariosDiv.style.display==='none') {
+                    comentariosDiv.style.display='block';
+                    renderComentarios(id, pubDiv.dataset.tipo, comentariosDiv);
+                } else {
+                    comentariosDiv.style.display='none';
+                }
+            };
         });
-        cargarResenas();
     }
-    // Acceso al buscador global desde menú
-    if(!document.getElementById('btn-busqueda-global')) {
-        const btn = document.createElement('button');
-        btn.id = 'btn-busqueda-global';
-        btn.textContent = 'Buscador';
-        btn.className = 'side-link';
-        btn.dataset.section = 'buscador';
-        document.querySelector('.main-nav ul').appendChild(btn);
-        btn.onclick = mostrarBuscadorGlobal;
-    }
-    document.getElementById('busqueda-tienda').addEventListener('input', function() {
-        const val = this.value.toLowerCase();
-        document.querySelectorAll('.producto').forEach(div => {
-            div.style.display = div.textContent.toLowerCase().includes(val) ? '' : 'none';
-        });
-    });
-    // Mostrar/ocultar secciones desde menú lateral (ya implementado)
-    // Inicializar contenido de las nuevas secciones (puedes personalizar luego)
-    function inicializarSeccionesPropias() {
-        // Productos
-        document.getElementById('productos-lista').innerHTML = '<p>Aquí verás todos los productos disponibles y podrás gestionarlos.</p>';
-        // Proveedores
-        document.getElementById('proveedores-lista').innerHTML = '<p>Aquí verás los proveedores registrados y sus datos de contacto.</p>';
-        // Pedidos
-        document.getElementById('pedidos-lista').innerHTML = '<p>Aquí aparecerán tus pedidos e historial de compras.</p>';
-        // Recetas
-        document.getElementById('recetas-lista').innerHTML = '<p>Guarda y consulta tus recetas favoritas aquí.</p>';
-        // Rutinas
-        document.getElementById('rutinas-lista').innerHTML = '<p>Organiza y visualiza tus rutinas de cuidado personal aquí.</p>';
-    }
-    window.onload = function() {
-        // Siempre mostrar solo el login al cargar
-        document.getElementById('auth-container').style.display = 'block';
-        document.getElementById('login-form').style.display = 'block';
-        document.getElementById('register-form').style.display = 'none';
-        document.getElementById('main-content').style.display = 'none';
-        if(document.getElementById('personaliza_panel')) document.getElementById('personaliza_panel').style.display = 'none';
-        // Si keepLogged está activo, mostrar página principal
-        const keepLogged = localStorage.getItem('keepLogged') === 'true';
-        const loggedUser = localStorage.getItem('loggedUser');
-        if(keepLogged && loggedUser && localStorage.getItem('user_' + loggedUser)) {
-            document.getElementById('auth-container').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
+    // --- Perfil: publicaciones propias, guardadas y con like ---
+    function renderPerfilPublicaciones() {
+        const usuario = localStorage.getItem('loggedUser');
+        const userData = JSON.parse(localStorage.getItem('user_' + usuario));
+        const cont = document.getElementById('perfil-publicaciones');
+        if(!cont) return;
+        let html = '';
+        // Publicaciones propias (ejemplo: rutinas/recetas creadas por el usuario)
+        const propias = getRutinasEjemplo().concat(getRecetasEjemplo()).filter(p => p.usuario === usuario);
+        if(propias.length) {
+            html += '<h3>Mis publicaciones</h3><div class="publicaciones-perfil">' + propias.map(p => renderPublicacion(p, p.tipo)).join('') + '</div>';
         }
-        inicializarSeccionesPropias();
-    };
+        // Publicaciones guardadas
+        const guardadas = getRutinasEjemplo().concat(getRecetasEjemplo()).filter(p => localStorage.getItem('guardado_' + p.id) === 'true');
+        if(guardadas.length) {
+            html += '<h3>Guardados ⭐</h3><div class="publicaciones-perfil">' + guardadas.map(p => renderPublicacion(p, p.tipo)).join('') + '</div>';
+        }
+        // Publicaciones con like
+        const likes = getRutinasEjemplo().concat(getRecetasEjemplo()).filter(p => localStorage.getItem('likes_' + p.id) === 'true');
+        if(likes.length) {
+            html += '<h3>Me gusta ❤️</h3><div class="publicaciones-perfil">' + likes.map(p => renderPublicacion(p, p.tipo)).join('') + '</div>';
+        }
+        cont.innerHTML = html || '<p>No tienes publicaciones propias, guardadas ni con like.</p>';
+        cargarInteraccionesFeed();
+    }
+    // Mostrar publicaciones en perfil al entrar
+    const perfilSection2 = document.getElementById('perfil');
+    if(perfilSection2) {
+        const observerPerfil2 = new MutationObserver(() => {
+            if (perfilSection2.style.display === 'block') {
+                renderPerfilPublicaciones();
+            }
+        });
+        observerPerfil2.observe(perfilSection2, { attributes: true, attributeFilter: ['style'] });
+    }
+    // --- Guardar en carpetas ---
+    function guardarEnCarpeta(id, tipo) {
+    let carpetas = JSON.parse(localStorage.getItem('carpetas_guardadas') || '[]');
+    let nombre = prompt('¿En qué carpeta quieres guardar esto? (puedes crear una nueva)');
+    if(!nombre) return;
+    let carpeta = carpetas.find(c => c.nombre === nombre);
+    if(!carpeta) {
+        carpeta = {nombre, items:[]};
+        carpetas.push(carpeta);
+    }
+    if(!carpeta.items.includes(id)) carpeta.items.push(id);
+    localStorage.setItem('carpetas_guardadas', JSON.stringify(carpetas));
+}
+// Mostrar feed en inicio según preferencias
+function renderFeedPersonalizado() {
+    const usuario = localStorage.getItem('loggedUser');
+    const userData = JSON.parse(localStorage.getItem('user_' + usuario));
+    let feed = [];
+    // Mostrar rutinas y recetas relacionadas a preferencias
+    const rutinas = getRutinasEjemplo().filter(r =>
+        (userData.cabello && r.descripcion.toLowerCase().match(new RegExp(userData.cabello.join('|'),'i')))
+        || (userData.piel && r.descripcion.toLowerCase().match(new RegExp(userData.piel.join('|'),'i')))
+        || (userData.nutricion && r.descripcion.toLowerCase().match(new RegExp(userData.nutricion.join('|'),'i')))
+    );
+    const recetas = getRecetasEjemplo().filter(r =>
+        (userData.nutricion && r.descripcion.toLowerCase().match(new RegExp(userData.nutricion.join('|'),'i')))
+    );
+    feed = rutinas.concat(recetas);
+    if(feed.length===0) feed = getRutinasEjemplo().concat(getRecetasEjemplo());
+    document.querySelector('#inicio .feed').innerHTML = feed.map(pub => renderPublicacion(pub, pub.tipo)).join('');
+    cargarInteraccionesFeed();
+}
+// Mostrar feed al entrar en inicio
+const inicioSection2 = document.getElementById('inicio');
+if(inicioSection2) {
+    const observerFeed2 = new MutationObserver(() => {
+        if (inicioSection2.style.display === 'block') {
+            renderFeedPersonalizado();
+        }
+    });
+    observerFeed2.observe(inicioSection2, { attributes: true, attributeFilter: ['style'] });
+}
     </script>
 </body>
 </html>
