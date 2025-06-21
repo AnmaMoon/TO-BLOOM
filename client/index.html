@@ -341,6 +341,29 @@
               <h2 class="section-title">Favoritos y Rutinas</h2>
               <div id="favoritos-lista" class="row g-4"></div>
             </section>
+            <section id="perfil" class="main-section" style="display:none">
+              <div class="row align-items-center mb-4">
+    <div class="col-md-4 text-center">
+      <img id="perfil-foto" src="assets/download.png" alt="Foto de perfil" class="rounded-circle shadow bg-white" style="width:130px;height:130px;object-fit:cover;border:3px solid #d63384;">
+    </div>
+    <div class="col-md-8 text-md-start text-center">
+      <h2 class="section-title mb-1" id="perfil-nombre">-</h2>
+      <div class="mb-2">
+        <span class="fw-bold">Usuario:</span> <span id="perfil-usuario" class="text-dark">-</span>
+      </div>
+      <div class="mb-2">
+        <span class="fw-bold">Email:</span> <span id="perfil-email" class="text-dark">-</span>
+      </div>
+    </div>
+  </div>
+  <div id="perfil-defectos" class="mb-4 p-3 bg-light rounded shadow-sm">
+    <h4 class="mb-2">Mis problemas de piel <span class="badge bg-secondary">Privado</span></h4>
+    <textarea id="defectos-text" class="form-control mb-2" placeholder="Describe aquí los problemas que enfrentas con tu piel..." rows="3" readonly></textarea>
+  </div>
+  <div id="perfil-publicaciones"></div>
+  <div id="seguidores"></div>
+  <div id="perfil-bio"></div>
+            </section>
             <!-- Add more sections as needed, styled with Bootstrap -->
         </main>
         <footer class="text-center mt-5 mb-3">
