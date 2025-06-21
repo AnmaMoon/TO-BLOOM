@@ -1,0 +1,233 @@
+// Entry point for client-side JS (to be filled with logic from index.html)
+
+// Move all the main <script> logic from your old index.html here
+// For now, just show a message to confirm JS is working
+window.addEventListener('DOMContentLoaded', () => {
+  document.body.insertAdjacentHTML('beforeend', '<div style="position:fixed;bottom:10px;right:10px;background:#388e3c;color:#fff;padding:0.5rem 1rem;border-radius:8px;z-index:9999;">JS conectado</div>');
+  setTimeout(() => {
+    const el = document.querySelector('div[style*="JS conectado"]');
+    if (el) el.remove();
+  }, 2000);
+});
+
+// --- UI Elements ---
+const authContainer = document.getElementById('auth-container');
+const mainContent = document.getElementById('main-content');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const showRegister = document.getElementById('show-register');
+const showLogin = document.getElementById('show-login');
+const loginError = document.getElementById('login-error');
+const registerError = document.getElementById('register-error');
+const verUsuariosBtn = document.getElementById('ver-usuarios-btn');
+const usuariosGuardados = document.getElementById('usuarios-guardados');
+
+// --- Show Register ---
+showRegister.onclick = function(e) {
+    e.preventDefault();
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'block';
+    loginError.style.display = 'none';
+    registerError.style.display = 'none';
+};
+// --- Show Login ---
+showLogin.onclick = function(e) {
+    e.preventDefault();
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'block';
+    registerError.style.display = 'none';
+    loginError.style.display = 'none';
+};
+// --- Register Form Submit (with backend call) ---
+registerForm.querySelector('form').onsubmit = async function(e) {
+    e.preventDefault();
+    let nombre = document.getElementById('register-nombre').value;
+    let apellidos = document.getElementById('register-apellidos').value;
+    let usuario = document.getElementById('register-user').value;
+    let email = document.getElementById('register-email').value;
+    let password = document.getElementById('register-password').value;
+    let password2 = document.getElementById('register-password2').value;
+    if(password !== password2) {
+        registerError.textContent = 'Las contraseñas no coinciden.';
+        registerError.style.display = 'block';
+        return;
+    }
+    // Backend call to register
+    try {
+        const res = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre, apellidos, usuario, email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Error de registro');
+        registerError.style.display = 'none';
+        // Show a nice Bootstrap toast or alert
+        showPopup('¡Registro exitoso! Ahora puedes iniciar sesión.', 'success');
+        registerForm.style.display = 'none';
+        loginForm.style.display = 'block';
+        registerForm.querySelector('form').reset();
+    } catch (err) {
+        registerError.textContent = err.message;
+        registerError.style.display = 'block';
+    }
+};
+
+// --- Login Form Submit (with backend call) ---
+loginForm.querySelector('form').onsubmit = async function(e) {
+    e.preventDefault();
+    const userInput = document.getElementById('login-user').value.trim();
+    const password = document.getElementById('login-password').value;
+    const keepLogged = document.getElementById('keep-logged').checked;
+    // Backend call to login
+    try {
+        const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userInput, password })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Usuario, email o contraseña incorrectos.');
+        loginError.style.display = 'none';
+        if(keepLogged) {
+            localStorage.setItem('keepLogged', 'true');
+            localStorage.setItem('loggedUser', data.usuario);
+        } else {
+            localStorage.removeItem('keepLogged');
+            localStorage.setItem('loggedUser', data.usuario);
+        }
+        authContainer.style.display = 'none';
+        mainContent.style.display = 'block';
+        showSection('inicio');
+        cargarPerfil();
+        mostrarBienvenidaUsuario();
+    } catch (err) {
+        loginError.textContent = err.message;
+        loginError.style.display = 'block';
+    }
+};
+// --- Show Saved Users ---
+verUsuariosBtn.onclick = function() {
+    let html = '';
+    for(let key in localStorage) {
+        if(key.startsWith('user_')) {
+            const data = JSON.parse(localStorage.getItem(key));
+            html += `<div><b>${data.usuario}</b> (${data.email})</div>`;
+        }
+    }
+    usuariosGuardados.innerHTML = html || '<i>No hay usuarios guardados.</i>';
+    usuariosGuardados.style.display = usuariosGuardados.style.display === 'none' ? 'block' : 'none';
+};
+// --- On Load: Always show login or main if keepLogged ---
+window.onload = function() {
+    const keepLogged = localStorage.getItem('keepLogged') === 'true';
+    const loggedUser = localStorage.getItem('loggedUser');
+    if(keepLogged && loggedUser) {
+        authContainer.style.display = 'none';
+        mainContent.style.display = 'block';
+        showSection('inicio');
+        cargarPerfil();
+        mostrarBienvenidaUsuario();
+    } else {
+        authContainer.style.display = 'block';
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        mainContent.style.display = 'none';
+    }
+};
+// --- Navigation ---
+document.querySelectorAll('.nav-link').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showSection(this.dataset.section);
+        if(this.dataset.section === 'perfil') cargarPerfil();
+        if(this.dataset.section === 'inicio') mostrarBienvenidaUsuario();
+    });
+});
+function showSection(section) {
+    document.querySelectorAll('.main-section').forEach(sec => sec.style.display = 'none');
+    const sec = document.getElementById(section);
+    if(sec) sec.style.display = 'block';
+    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+    const active = document.querySelector(`.nav-link[data-section="${section}"]`);
+    if(active) active.classList.add('active');
+}
+// --- Perfil ---
+function cargarPerfil() {
+    const usuario = localStorage.getItem('loggedUser');
+    if (!usuario) return;
+    const userData = JSON.parse(localStorage.getItem('user_' + usuario));
+    document.getElementById('perfil-usuario').textContent = userData.usuario || '';
+    document.getElementById('perfil-nombre').textContent = userData.nombre || '';
+    document.getElementById('perfil-email').textContent = userData.email || '';
+    document.getElementById('perfil-foto').src = userData.fotoPerfil || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.nombre||userData.usuario)}`;
+    // Biografía editable
+    let bio = userData.bio || '';
+    let bioDiv = document.getElementById('perfil-bio');
+    bioDiv.innerHTML = bio + ' <button id="editar-bio-btn" class="btn btn-link btn-sm">Editar biografía</button>';
+    document.getElementById('editar-bio-btn').onclick = function() {
+        const nuevoBio = prompt('Edita tu biografía:', bio);
+        if(nuevoBio !== null) {
+            userData.bio = nuevoBio;
+            localStorage.setItem('user_' + usuario, JSON.stringify(userData));
+            cargarPerfil();
+        }
+    };
+    // Seguidores/seguidos (simulado)
+    let seguidores = userData.seguidores || Math.floor(Math.random()*100+10);
+    let seguidos = userData.seguidos || Math.floor(Math.random()*50+5);
+    let segDiv = document.getElementById('seguidores');
+    segDiv.textContent = seguidores + ' seguidores, ' + seguidos + ' seguidos';
+    // Defectos personales
+    document.getElementById('defectos-text').value = userData.defectos || '';
+    document.getElementById('guardar-defectos').onclick = function() {
+        userData.defectos = document.getElementById('defectos-text').value;
+        localStorage.setItem('user_' + usuario, JSON.stringify(userData));
+        document.getElementById('defectos-msg').style.display = 'inline';
+        setTimeout(()=>{
+            document.getElementById('defectos-msg').style.display = 'none';
+        }, 1500);
+    };
+    // Cambiar foto de perfil
+    document.getElementById('cambiar-foto').onchange = function(e) {
+        const file = e.target.files[0];
+        if(file) {
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                userData.fotoPerfil = ev.target.result;
+                localStorage.setItem('user_' + usuario, JSON.stringify(userData));
+                cargarPerfil();
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+}
+// --- Bienvenida usuario ---
+function mostrarBienvenidaUsuario() {
+    const usuario = localStorage.getItem('loggedUser');
+    if (!usuario) return;
+    const userData = JSON.parse(localStorage.getItem('user_' + usuario));
+    if (userData && userData.nombre) {
+        document.getElementById('inicio').querySelector('h2').innerHTML = `¡Bienvenida, <span style="color:#d63384;">${userData.nombre}</span>!`;
+    }
+}
+
+// --- Popup function ---
+function showPopup(message, type = 'success') {
+    let popup = document.createElement('div');
+    popup.className = `toast align-items-center text-bg-${type} border-0 show position-fixed top-0 start-50 translate-middle-x mt-4`;
+    popup.style.zIndex = 9999;
+    popup.style.minWidth = '250px';
+    popup.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body w-100 text-center">${message}</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    `;
+    document.body.appendChild(popup);
+    setTimeout(() => {
+      popup.classList.remove('show');
+      setTimeout(() => popup.remove(), 500);
+    }, 2500);
+    popup.querySelector('.btn-close').onclick = () => popup.remove();
+}

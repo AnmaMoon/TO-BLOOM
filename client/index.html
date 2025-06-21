@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florecer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/src/style.css">
+    <style>
+      body {
+        background: linear-gradient(135deg, #fff0f6 0%, #ffe5ec 100%);
+      }
+      .main-nav {
+        background: linear-gradient(90deg, #f8bbd0 0%, #e0c3fc 100%);
+        border-radius: 40px;
+        box-shadow: 0 4px 24px #f3c4d3;
+        padding: 0.5rem 2rem 0.5rem 2rem;
+        display: inline-flex;
+        gap: 0.5rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        animation: navFadeIn 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+      }
+      @keyframes navFadeIn {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .main-nav a {
+        color: #d63384;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border-radius: 20px;
+        padding: 0.5rem 1.3rem;
+        margin: 0 0.2rem;
+        background: rgba(255,255,255,0.7);
+        box-shadow: 0 2px 8px #f3c4d3;
+        position: relative;
+        transition: color 0.2s, box-shadow 0.3s, background 0.3s;
+        overflow: hidden;
+      }
+      .main-nav a.active, .main-nav a:hover {
+        color: #fff;
+        background: linear-gradient(90deg, #d63384 0%, #ae3ec9 100%);
+        box-shadow: 0 0 16px 4px #f783ac, 0 0 32px 8px #e0c3fc;
+        text-decoration: underline;
+        z-index: 1;
+      }
+      .main-nav a:hover::after {
+        content: '✨';
+        position: absolute;
+        right: 12px;
+        top: 8px;
+        font-size: 1.2em;
+        animation: sparkle 0.7s linear;
+        pointer-events: none;
+      }
+      @keyframes sparkle {
+        0% { opacity: 0; transform: scale(0.5) rotate(-20deg); }
+        40% { opacity: 1; transform: scale(1.2) rotate(10deg); }
+        80% { opacity: 1; transform: scale(1) rotate(-10deg); }
+        100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+      }
+      .auth-form, #main-content {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px #f3c4d3;
+        padding: 2.5rem;
+        margin-top: 2.5rem;
+      }
+      .brand-title {
+        font-family: 'Pacifico', cursive;
+        color: #d63384;
+        font-size: 3rem;
+        text-align: center;
+        margin-bottom: 0.3rem;
+      }
+      .brand-title img {
+        height: 110px !important;
+        width: 180px !important;
+        border-radius: 50% / 40%;
+        box-shadow: 0 6px 32px #f3c4d3, 0 0 0 8px #fff0f6;
+        background: linear-gradient(135deg, #fff0f6 60%, #e0c3fc 100%);
+        border: 4px solid #f783ac;
+        margin-bottom: 0.5rem;
+        object-fit: contain;
+        object-position: center center;
+        display: block;
+        background-color: #fff0f6;
+      }
+      .brand-sub {
+        text-align: center;
+        font-size: 1.3rem;
+        color: #ae3ec9;
+        font-style: italic;
+        margin-bottom: 1.2rem;
+      }
+      .btn-primary {
+        background: linear-gradient(90deg, #d63384 0%, #ae3ec9 100%);
+        border: none;
+      }
+      .btn-primary:hover {
+        background: linear-gradient(90deg, #ae3ec9 0%, #d63384 100%);
+      }
+      .section-title {
+        color: #ae3ec9;
+        font-weight: bold;
+      }
+      .producto {
+        background: #fff0f6;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px #f3c4d3;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .producto img {
+        border-radius: 10px;
+        border: 2px solid #f783ac;
+      }
+      .nav-link {
+        transition: color 0.2s;
+      }
+      .main-section {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px #f3c4d3;
+        padding: 2rem 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .feed .post {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        background: #fff0f6;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px #f3c4d3;
+        padding: 1.2rem 1rem;
+        margin-bottom: 1.2rem;
+      }
+      .feed .post img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid #f783ac;
+      }
+      #carrito-lista .carrito-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fff0f6;
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        margin-bottom: 0.7rem;
+        box-shadow: 0 1px 4px #f3c4d3;
+      }
+      #carrito-lista .carrito-item b {
+        color: #ae3ec9;
+      }
+      #carrito-total {
+        font-size: 1.2rem;
+        color: #d63384;
+        font-weight: bold;
+      }
+      #perfil-info {
+        background: #fff0f6;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px #f3c4d3;
+        padding: 1.2rem 1rem;
+      }
+      #perfil-defectos textarea {
+        font-family: inherit;
+        font-size: 1rem;
+        background: #fff0f6;
+        border: 1px solid #f783ac;
+      }
+      #perfil-defectos button {
+        background: linear-gradient(90deg, #ae3ec9 0%, #d63384 100%);
+        color: #fff;
+        border: none;
+      }
+      #perfil-defectos button:hover {
+        background: linear-gradient(90deg, #d63384 0%, #ae3ec9 100%);
+      }
+      .form-control, .form-select {
+        border-radius: 8px;
+        border: 1px solid #f783ac;
+        font-family: inherit;
+      }
+      .form-control:focus, .form-select:focus {
+        border-color: #ae3ec9;
+        box-shadow: 0 0 0 0.2rem #f3c4d3;
+      }
+      .btn {
+        font-family: inherit;
+        font-weight: 500;
+      }
+      .toast-body {
+        font-family: inherit;
+        font-size: 1.1rem;
+      }
+      .brand-title, .section-title, h2, h3, h4, h5 {
+        font-family: 'Pacifico', cursive, 'Segoe UI', Arial, sans-serif;
+      }
+      body, p, label, input, select, textarea, .btn, .nav-link {
+        font-family: 'Segoe UI', Arial, sans-serif;
+      }
+    </style>
+</head>
+<body>
+    <div id="auth-container">
+        <div id="login-form" class="auth-form mx-auto shadow-lg" style="max-width:350px;margin-top:10vh;">
+            <h2 class="section-title text-center">Iniciar sesión</h2>
+            <form>
+                <label for="login-user">Usuario o Email:</label>
+                <input type="text" id="login-user" class="form-control mb-2" required>
+                <label for="login-password">Contraseña:</label>
+                <input type="password" id="login-password" class="form-control mb-2" required>
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="keep-logged">
+                  <label class="form-check-label" for="keep-logged">Mantener sesión iniciada</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-50 d-block mx-auto py-1" style="font-size:1rem;">Entrar</button>
+            </form>
+            <p class="mt-3 text-center">¿No tienes cuenta? <a href="#" id="show-register">Regístrate</a></p>
+            <p id="login-error" class="text-danger text-center" style="display:none;"></p>
+            <button id="ver-usuarios-btn" type="button" class="btn btn-outline-secondary btn-sm mt-2 w-100">Ver usuarios guardados</button>
+            <div id="usuarios-guardados" style="display:none;margin-top:1rem;background:#f7f7f7;padding:1rem;border-radius:8px;"></div>
+        </div>
+        <div id="register-form" class="auth-form mx-auto shadow-lg" style="max-width:350px;margin-top:10vh;display:none">
+            <h2 class="section-title text-center">Registrarse</h2>
+            <form>
+                <label for="register-nombre">Nombre:</label>
+                <input type="text" id="register-nombre" class="form-control mb-2" required>
+                <label for="register-apellidos">Apellidos:</label>
+                <input type="text" id="register-apellidos" class="form-control mb-2" required>
+                <label for="register-user">Usuario:</label>
+                <input type="text" id="register-user" class="form-control mb-2" required>
+                <label for="register-email">Email:</label>
+                <input type="email" id="register-email" class="form-control mb-2" required>
+                <label for="register-password">Contraseña:</label>
+                <input type="password" id="register-password" class="form-control mb-2" required>
+                <label for="register-password2">Verificar contraseña:</label>
+                <input type="password" id="register-password2" class="form-control mb-2" required>
+                <button type="submit" id="continuar-btn" class="btn btn-primary w-75 d-block mx-auto d-flex align-items-center justify-content-center gap-2 py-1">
+                    Continuar <span style="font-size:1.3em;">&#8594;</span>
+                </button>
+            </form>
+            <p class="mt-3 text-center">¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión</a></p>
+            <p id="register-error" class="text-danger text-center" style="display:none;"></p>
+        </div>
+    </div>
+    <div id="main-content" style="display:none">
+        <header>
+            <div class="brand-title d-flex flex-column align-items-center">
+                <img src="assets/logo.png" alt="Florecer Logo" style="height:70px;width:auto;margin-bottom:0.5rem;">
+            </div>
+            <div class="brand-sub">La piel que mereces, el cuidado que necesitas</div>
+            <nav class="main-nav nav justify-content-center mb-4">
+                <a href="#" class="nav-link" data-section="inicio">Inicio</a>
+                <a href="#" class="nav-link" data-section="feed-recomendaciones">Feed</a>
+                <a href="#" class="nav-link" data-section="tienda">Tienda</a>
+                <a href="#" class="nav-link" data-section="carrito">Carrito</a>
+                <a href="#" class="nav-link" data-section="perfil">Perfil</a>
+                <a href="#" class="nav-link" data-section="configuracion">Configuración</a>
+                <a href="#" class="nav-link" data-section="favoritos-rutinas">Favoritos y Rutinas</a>
+                <a href="#" class="nav-link" data-section="buscador">Buscador</a>
+            </nav>
+        </header>
+        <main>
+            <section id="inicio" class="main-section">
+                <h2 class="section-title">Inicio</h2>
+                <div class="feed">
+                    <article class="post">
+                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Bienestar" class="img-fluid rounded mb-3" style="max-width:300px;">
+                        <div>
+                            <h3>¡Cuida tu mente y cuerpo!</h3>
+                            <p>Descubre rutinas diarias para sentirte mejor cada día.</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section id="tienda" class="main-section" style="display:none">
+                <h2 class="section-title">Tienda personalizada</h2>
+                <input type="text" id="busqueda-tienda" class="form-control mb-3" placeholder="Buscar producto..." />
+                <div id="productos-tienda"></div>
+            </section>
+            <section id="carrito" class="main-section" style="display:none">
+                <h2 class="section-title">Carrito de compras</h2>
+                <div id="carrito-lista"></div>
+                <div id="carrito-total" class="my-3"></div>
+                <button id="btn-comprar" class="btn btn-success" style="display:none;">Comprar</button>
+                <div id="compra-form" style="display:none; margin-top:1.5rem;">
+                    <h3>Datos para la compra</h3>
+                    <form id="form-compra">
+                        <label>Nombre completo:<br><input type="text" id="compra-nombre" class="form-control" required></label><br>
+                        <label>Dirección:<br><input type="text" id="compra-direccion" class="form-control" required></label><br>
+                        <label>Email:<br><input type="email" id="compra-email" class="form-control" required></label><br>
+                        <label>Método de pago:<br>
+                            <select id="compra-pago" class="form-select" required>
+                                <option value="tarjeta">Tarjeta de crédito/débito</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="transferencia">Transferencia bancaria</option>
+                            </select>
+                        </label><br>
+                        <button type="submit" class="btn btn-primary">Finalizar compra</button>
+                    </form>
+                    <div id="compra-exito" class="text-success mt-3" style="display:none;">¡Compra realizada con éxito!</div>
+                </div>
+            </section>
+            <section id="perfil" class="main-section" style="display:none">
+                <h2 class="section-title">Perfil</h2>
+                <div id="perfil-info" class="d-flex align-items-center gap-4 mb-4">
+                    <div>
+                        <img id="perfil-foto" src="https://ui-avatars.com/api/?name=Usuario" alt="Foto de perfil" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:2px solid #d63384;">
+                        <input type="file" id="cambiar-foto" accept="image/*" class="form-control mt-2">
+                    </div>
+                    <div>
+                        <p><b>Usuario:</b> <span id="perfil-usuario"></span></p>
+                        <p><b>Nombre:</b> <span id="perfil-nombre"></span></p>
+                        <p><b>Email:</b> <span id="perfil-email"></span></p>
+                    </div>
+                </div>
+                <div id="perfil-defectos" class="mb-4 p-3 bg-light rounded">
+                    <h3 style="margin-top:0;">Mis defectos (solo tú puedes ver esto)</h3>
+                    <textarea id="defectos-text" class="form-control mb-2" placeholder="Escribe aquí tus defectos personales..."></textarea>
+                    <button id="guardar-defectos" class="btn btn-outline-primary">Guardar</button>
+                    <span id="defectos-msg" class="text-success ms-3" style="display:none;">Guardado</span>
+                </div>
+                <div id="perfil-publicaciones"></div>
+                <div id="seguidores"></div>
+                <div id="perfil-bio"></div>
+            </section>
+            <!-- Add more sections as needed, styled with Bootstrap -->
+        </main>
+        <footer class="text-center mt-5 mb-3">
+            <p class="text-muted">&copy; 2025 florecer</p>
+        </footer>
+    </div>
+    <script type="module" src="./src/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
