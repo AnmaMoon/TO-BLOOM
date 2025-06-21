@@ -204,6 +204,23 @@
       body, p, label, input, select, textarea, .btn, .nav-link {
         font-family: 'Segoe UI', Arial, sans-serif;
       }
+      .logout-cute-btn {
+        background: #fff0f6;
+        color: #d63384;
+        border: 2px solid #f783ac;
+        border-radius: 24px;
+        box-shadow: 0 2px 12px #f3c4d3;
+        font-weight: 600;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        padding: 0.5rem 1.3rem;
+        min-width: 120px;
+      }
+      .logout-cute-btn:hover, .logout-cute-btn:focus {
+        background: linear-gradient(90deg, #f8bbd0 0%, #e0c3fc 100%);
+        color: #fff;
+        box-shadow: 0 0 24px 6px #f783ac, 0 0 32px 8px #e0c3fc;
+        outline: none;
+      }
     </style>
 </head>
 <body>
@@ -269,15 +286,20 @@
         <main>
             <section id="inicio" class="main-section">
                 <h2 class="section-title">Inicio</h2>
-                <div class="feed">
-                    <article class="post">
-                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Bienestar" class="img-fluid rounded mb-3" style="max-width:300px;">
-                        <div>
-                            <h3>¡Cuida tu mente y cuerpo!</h3>
-                            <p>Descubre rutinas diarias para sentirte mejor cada día.</p>
-                        </div>
-                    </article>
-                </div>
+                <section class="about-section mt-4 p-4 rounded" style="background:linear-gradient(90deg,#fff0f6 60%,#e0c3fc 100%);box-shadow:0 2px 12px #f3c4d3;">
+                  <h3 class="section-title mb-2">Sobre el Mapa de Florecer</h3>
+                  <p>
+                    Florecer es tu guía personalizada para lograr una piel radiante y saludable. Nuestro mapa interactivo te ayuda a descubrir los mejores productos de maquillaje y cuidado facial, adaptados a tus necesidades y preferencias. Explora recomendaciones, crea rutinas de belleza, y encuentra tiendas cercanas o productos destacados para tu tipo de piel.
+                  </p>
+                  <ul>
+                    <li><b>Rutinas personalizadas:</b> Recibe sugerencias diarias para mejorar tu piel y tu maquillaje.</li>
+                    <li><b>Mapa de tiendas y productos:</b> Descubre dónde comprar los mejores cosméticos y productos de skincare cerca de ti.</li>
+                    <li><b>Comunidad y favoritos:</b> Guarda tus rutinas favoritas y comparte experiencias con otras usuarias.</li>
+                  </ul>
+                  <p>
+                    ¡Empieza a florecer hoy y luce la piel que mereces con Florecer!
+                  </p>
+                </section>
             </section>
             <section id="tienda" class="main-section" style="display:none">
                 <h2 class="section-title">Tienda personalizada</h2>
@@ -308,27 +330,28 @@
                 </div>
             </section>
             <section id="perfil" class="main-section" style="display:none">
-                <h2 class="section-title">Perfil</h2>
-                <div id="perfil-info" class="d-flex align-items-center gap-4 mb-4">
-                    <div>
-                        <img id="perfil-foto" src="https://ui-avatars.com/api/?name=Usuario" alt="Foto de perfil" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:2px solid #d63384;">
-                        <input type="file" id="cambiar-foto" accept="image/*" class="form-control mt-2">
-                    </div>
-                    <div>
-                        <p><b>Usuario:</b> <span id="perfil-usuario"></span></p>
-                        <p><b>Nombre:</b> <span id="perfil-nombre"></span></p>
-                        <p><b>Email:</b> <span id="perfil-email"></span></p>
-                    </div>
+              <h2 class="section-title">Perfil</h2>
+              <div id="perfil-info" class="d-flex align-items-center gap-4 mb-4">
+                <div>
+                  <img id="perfil-foto" src="https://ui-avatars.com/api/?name=Usuario" alt="Foto de perfil" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:2px solid #d63384;">
+                  <input type="file" id="cambiar-foto" accept="image/*" class="form-control mt-2">
                 </div>
-                <div id="perfil-defectos" class="mb-4 p-3 bg-light rounded">
-                    <h3 style="margin-top:0;">Mis defectos (solo tú puedes ver esto)</h3>
-                    <textarea id="defectos-text" class="form-control mb-2" placeholder="Escribe aquí tus defectos personales..."></textarea>
-                    <button id="guardar-defectos" class="btn btn-outline-primary">Guardar</button>
-                    <span id="defectos-msg" class="text-success ms-3" style="display:none;">Guardado</span>
+                <div>
+                  <p><b>Usuario:</b> <span id="perfil-usuario">-</span></p>
+                  <p><b>Nombre:</b> <span id="perfil-nombre">-</span></p>
+                  <p><b>Apellidos:</b> <span id="perfil-apellidos">-</span></p>
+                  <p><b>Email:</b> <span id="perfil-email">-</span></p>
                 </div>
-                <div id="perfil-publicaciones"></div>
-                <div id="seguidores"></div>
-                <div id="perfil-bio"></div>
+              </div>
+              <div id="perfil-defectos" class="mb-4 p-3 bg-light rounded">
+                  <h3 style="margin-top:0;">Mis defectos (solo tú puedes ver esto)</h3>
+                  <textarea id="defectos-text" class="form-control mb-2" placeholder="Escribe aquí tus defectos personales..."></textarea>
+                  <button id="guardar-defectos" class="btn btn-outline-primary">Guardar</button>
+                  <span id="defectos-msg" class="text-success ms-3" style="display:none;">Guardado</span>
+              </div>
+              <div id="perfil-publicaciones"></div>
+              <div id="seguidores"></div>
+              <div id="perfil-bio"></div>
             </section>
             <!-- Add more sections as needed, styled with Bootstrap -->
         </main>
@@ -336,6 +359,9 @@
             <p class="text-muted">&copy; 2025 florecer</p>
         </footer>
     </div>
+    <button id="logout-btn" class="btn btn-outline-danger position-fixed end-0 top-0 mt-3 me-3 logout-cute-btn" style="z-index:1050;display:none;transition:box-shadow 0.3s,background 0.3s;">
+      <span style="font-size:1.1em;">Cerrar sesión</span>
+    </button>
     <script type="module" src="./src/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

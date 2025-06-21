@@ -62,6 +62,8 @@ registerForm.querySelector('form').onsubmit = async function(e) {
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Error de registro');
         registerError.style.display = 'none';
+        // Save user info to localStorage for perfil
+        localStorage.setItem('user_' + usuario, JSON.stringify({ nombre, apellidos, usuario, email }));
         // Show a nice Bootstrap toast or alert
         showPopup('¡Registro exitoso! Ahora puedes iniciar sesión.', 'success');
         registerForm.style.display = 'none';
@@ -96,11 +98,15 @@ loginForm.querySelector('form').onsubmit = async function(e) {
             localStorage.removeItem('keepLogged');
             localStorage.setItem('loggedUser', data.usuario);
         }
+        // Save user info to localStorage for perfil
+        localStorage.setItem('user_' + data.usuario, JSON.stringify({ nombre: data.nombre, apellidos: data.apellidos, usuario: data.usuario, email: data.email }));
         authContainer.style.display = 'none';
         mainContent.style.display = 'block';
         showSection('inicio');
         cargarPerfil();
         mostrarBienvenidaUsuario();
+        // After successful login, fill perfil info
+        fillPerfilInfo(data);
     } catch (err) {
         loginError.textContent = err.message;
         loginError.style.display = 'block';
@@ -128,11 +134,13 @@ window.onload = function() {
         showSection('inicio');
         cargarPerfil();
         mostrarBienvenidaUsuario();
+        showLogoutBtn(true); // Show logout button when logged in
     } else {
         authContainer.style.display = 'block';
         loginForm.style.display = 'block';
         registerForm.style.display = 'none';
         mainContent.style.display = 'none';
+        showLogoutBtn(false); // Hide logout button when not logged in
     }
 };
 // --- Navigation ---
@@ -155,12 +163,39 @@ function showSection(section) {
 // --- Perfil ---
 function cargarPerfil() {
     const usuario = localStorage.getItem('loggedUser');
-    if (!usuario) return;
-    const userData = JSON.parse(localStorage.getItem('user_' + usuario));
-    document.getElementById('perfil-usuario').textContent = userData.usuario || '';
-    document.getElementById('perfil-nombre').textContent = userData.nombre || '';
-    document.getElementById('perfil-email').textContent = userData.email || '';
-    document.getElementById('perfil-foto').src = userData.fotoPerfil || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.nombre||userData.usuario)}`;
+    if (!usuario) {
+        document.getElementById('perfil-usuario').textContent = '-';
+        document.getElementById('perfil-nombre').textContent = '-';
+        document.getElementById('perfil-email').textContent = '-';
+        document.getElementById('perfil-foto').src = 'https://ui-avatars.com/api/?name=Usuario';
+        return;
+    }
+    const userDataRaw = localStorage.getItem('user_' + usuario);
+    if (!userDataRaw) {
+        document.getElementById('perfil-usuario').textContent = '-';
+        document.getElementById('perfil-nombre').textContent = '-';
+        document.getElementById('perfil-email').textContent = '-';
+        document.getElementById('perfil-foto').src = 'https://ui-avatars.com/api/?name=Usuario';
+        return;
+    }
+    let userData;
+    try {
+        userData = JSON.parse(userDataRaw);
+    } catch {
+        document.getElementById('perfil-usuario').textContent = '-';
+        document.getElementById('perfil-nombre').textContent = '-';
+        document.getElementById('perfil-email').textContent = '-';
+        document.getElementById('perfil-foto').src = 'https://ui-avatars.com/api/?name=Usuario';
+        return;
+    }
+    document.getElementById('perfil-usuario').textContent = userData.usuario || userData.username || '-';
+    document.getElementById('perfil-nombre').textContent = userData.nombre || '-';
+    document.getElementById('perfil-email').textContent = userData.email || '-';
+    // Optionally show apellidos in perfil
+    if(document.getElementById('perfil-apellidos')) {
+        document.getElementById('perfil-apellidos').textContent = userData.apellidos || '-';
+    }
+    document.getElementById('perfil-foto').src = userData.fotoPerfil || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.nombre||userData.usuario||'Usuario')}`;
     // Biografía editable
     let bio = userData.bio || '';
     let bioDiv = document.getElementById('perfil-bio');
@@ -231,3 +266,55 @@ function showPopup(message, type = 'success') {
     }, 2500);
     popup.querySelector('.btn-close').onclick = () => popup.remove();
 }
+
+// Ensure perfil info is filled on page load and when section is shown
+function getLoggedUser() {
+  try {
+    return JSON.parse(localStorage.getItem('user'));
+  } catch {
+    return null;
+  }
+}
+
+function fillPerfilInfo() {
+  const user = getLoggedUser();
+  const usuarioSpan = document.getElementById('perfil-usuario');
+  const nombreSpan = document.getElementById('perfil-nombre');
+  const emailSpan = document.getElementById('perfil-email');
+  const fotoImg = document.getElementById('perfil-foto');
+  if (user) {
+    usuarioSpan.textContent = user.username || user.user || '';
+    nombreSpan.textContent = user.nombre || '';
+    emailSpan.textContent = user.email || '';
+    const name = (user.nombre || user.username || user.user || 'Usuario').split(' ')[0];
+    fotoImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}`;
+  } else {
+    usuarioSpan.textContent = '';
+    nombreSpan.textContent = '';
+    emailSpan.textContent = '';
+    fotoImg.src = 'https://ui-avatars.com/api/?name=Usuario';
+  }
+}
+
+// Call fillPerfilInfo on nav click and on page load
+const perfilNav = document.querySelector('[data-section="perfil"]');
+if (perfilNav) {
+  perfilNav.addEventListener('click', fillPerfilInfo);
+}
+window.addEventListener('DOMContentLoaded', fillPerfilInfo);
+
+// --- Logout ---
+const logoutBtn = document.getElementById('logout-btn');
+function showLogoutBtn(show) {
+    if (logoutBtn) logoutBtn.style.display = show ? 'block' : 'none';
+}
+logoutBtn.onclick = function() {
+    localStorage.removeItem('keepLogged');
+    localStorage.removeItem('loggedUser');
+    window.location.reload();
+};
+// Show logout button only when logged in
+window.addEventListener('DOMContentLoaded', () => {
+    const loggedUser = localStorage.getItem('loggedUser');
+    showLogoutBtn(!!loggedUser);
+});

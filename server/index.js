@@ -37,7 +37,7 @@ app.use('/api', require('./routes'));
 
 // Fallback to index.html for SPA
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/public/index.html'));
+  res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
