@@ -167,7 +167,8 @@ function cargarPerfil() {
         document.getElementById('perfil-usuario').textContent = '-';
         document.getElementById('perfil-nombre').textContent = '-';
         document.getElementById('perfil-email').textContent = '-';
-        document.getElementById('perfil-foto').src = 'https://ui-avatars.com/api/?name=Usuario';
+        document.getElementById('perfil-foto').src = '../assets/download.png';
+        document.getElementById('defectos-text').value = '';
         return;
     }
     const userDataRaw = localStorage.getItem('user_' + usuario);
@@ -175,7 +176,8 @@ function cargarPerfil() {
         document.getElementById('perfil-usuario').textContent = '-';
         document.getElementById('perfil-nombre').textContent = '-';
         document.getElementById('perfil-email').textContent = '-';
-        document.getElementById('perfil-foto').src = 'https://ui-avatars.com/api/?name=Usuario';
+        document.getElementById('perfil-foto').src = 'https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/user.svg';
+        document.getElementById('defectos-text').value = '';
         return;
     }
     let userData;
@@ -185,57 +187,15 @@ function cargarPerfil() {
         document.getElementById('perfil-usuario').textContent = '-';
         document.getElementById('perfil-nombre').textContent = '-';
         document.getElementById('perfil-email').textContent = '-';
-        document.getElementById('perfil-foto').src = 'https://ui-avatars.com/api/?name=Usuario';
+        document.getElementById('perfil-foto').src = 'https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/user.svg';
+        document.getElementById('defectos-text').value = '';
         return;
     }
     document.getElementById('perfil-usuario').textContent = userData.usuario || userData.username || '-';
-    document.getElementById('perfil-nombre').textContent = userData.nombre || '-';
+    document.getElementById('perfil-nombre').textContent = (userData.nombre ? userData.nombre + (userData.apellidos ? ' ' + userData.apellidos : '') : '-');
     document.getElementById('perfil-email').textContent = userData.email || '-';
-    // Optionally show apellidos in perfil
-    if(document.getElementById('perfil-apellidos')) {
-        document.getElementById('perfil-apellidos').textContent = userData.apellidos || '-';
-    }
-    document.getElementById('perfil-foto').src = userData.fotoPerfil || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.nombre||userData.usuario||'Usuario')}`;
-    // Biografía editable
-    let bio = userData.bio || '';
-    let bioDiv = document.getElementById('perfil-bio');
-    bioDiv.innerHTML = bio + ' <button id="editar-bio-btn" class="btn btn-link btn-sm">Editar biografía</button>';
-    document.getElementById('editar-bio-btn').onclick = function() {
-        const nuevoBio = prompt('Edita tu biografía:', bio);
-        if(nuevoBio !== null) {
-            userData.bio = nuevoBio;
-            localStorage.setItem('user_' + usuario, JSON.stringify(userData));
-            cargarPerfil();
-        }
-    };
-    // Seguidores/seguidos (simulado)
-    let seguidores = userData.seguidores || Math.floor(Math.random()*100+10);
-    let seguidos = userData.seguidos || Math.floor(Math.random()*50+5);
-    let segDiv = document.getElementById('seguidores');
-    segDiv.textContent = seguidores + ' seguidores, ' + seguidos + ' seguidos';
-    // Defectos personales
+    document.getElementById('perfil-foto').src = userData.fotoPerfil || 'https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/user.svg';
     document.getElementById('defectos-text').value = userData.defectos || '';
-    document.getElementById('guardar-defectos').onclick = function() {
-        userData.defectos = document.getElementById('defectos-text').value;
-        localStorage.setItem('user_' + usuario, JSON.stringify(userData));
-        document.getElementById('defectos-msg').style.display = 'inline';
-        setTimeout(()=>{
-            document.getElementById('defectos-msg').style.display = 'none';
-        }, 1500);
-    };
-    // Cambiar foto de perfil
-    document.getElementById('cambiar-foto').onchange = function(e) {
-        const file = e.target.files[0];
-        if(file) {
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                userData.fotoPerfil = ev.target.result;
-                localStorage.setItem('user_' + usuario, JSON.stringify(userData));
-                cargarPerfil();
-            };
-            reader.readAsDataURL(file);
-        }
-    };
 }
 // --- Bienvenida usuario ---
 function mostrarBienvenidaUsuario() {
