@@ -90,31 +90,19 @@
     </div>
     <div id="main-content" style="display:none">
         <header>
-            <h1>florecer</h1>
-            <nav class="main-nav">
-                <ul>
-                    <li class="menu-dropdown">
-                        <button id="menuBtn">Menú</button>
-                    </li>
-                    <li class="frase"><span style="font-style: italic; color: #fff;">Vive tu vida</span></li>
-                    <li><button class="side-link" data-section="tienda">Tienda</button></li>
-                    <li><button class="side-link" data-section="carrito">Carrito</button></li>
-                </ul>
+            <h1 style="font-size:3rem; margin-bottom:0.3rem; text-align:center;">florecer</h1>
+            <div style="text-align:center; font-size:1.3rem; color:#7b3f00; font-style:italic; margin-bottom:1.2rem;">La piel que mereces, el cuidado que necesitas</div>
+            <nav class="main-nav" style="display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;">
+                <a href="#" class="nav-link" data-section="inicio">Inicio</a>
+                <a href="#" class="nav-link" data-section="feed-recomendaciones">Feed</a>
+                <a href="#" class="nav-link" data-section="tienda">Tienda</a>
+                <a href="#" class="nav-link" data-section="carrito">Carrito</a>
+                <a href="#" class="nav-link" data-section="perfil">Perfil</a>
+                <a href="#" class="nav-link" data-section="configuracion">Configuración</a>
+                <a href="#" class="nav-link" data-section="favoritos-rutinas">Favoritos y Rutinas</a>
+                <a href="#" class="nav-link" data-section="buscador">Buscador</a>
             </nav>
         </header>
-        <aside id="sideMenu" class="side-menu">
-            <ul>
-                <li><button class="side-link" data-section="inicio">Inicio</button></li>
-                <li><button class="side-link" data-section="perfil">Perfil</button></li>
-                <li><button class="side-link" data-section="buscador">Buscador</button></li>
-                <li><button class="side-link" data-section="configuracion">Configuración</button></li>
-                <li><button class="side-link" data-section="productos">Productos</button></li>
-                <li><button class="side-link" data-section="proveedores">Proveedores</button></li>
-                <li><button class="side-link" data-section="pedidos">Pedidos</button></li>
-                <li><button class="side-link" data-section="recetas">Recetas</button></li>
-                <li><button class="side-link" data-section="rutinas">Rutinas</button></li>
-            </ul>
-        </aside>
         <main>
             <section id="inicio" class="main-section">
                 <h2 id="bienvenida-usuario">Inicio</h2>
@@ -479,14 +467,6 @@
                 <h2>Recomendaciones para ti</h2>
                 <div id="recomendaciones-lista"></div>
             </section>
-            <!-- Sección Productos -->
-            <section id="productos" class="main-section" style="display:none">
-                <h2>Productos</h2>
-                <div class="productos-lista">
-                    <p>Aquí podrás ver, buscar y gestionar todos los productos disponibles en la plataforma.</p>
-                    <div class="placeholder">(Próximamente: gestión avanzada de productos)</div>
-                </div>
-            </section>
             <!-- Sección Proveedores -->
             <section id="proveedores" class="main-section" style="display:none">
                 <h2>Proveedores</h2>
@@ -495,28 +475,16 @@
                     <div class="placeholder">(Próximamente: gestión avanzada de proveedores)</div>
                 </div>
             </section>
-            <!-- Sección Pedidos -->
-            <section id="pedidos" class="main-section" style="display:none">
-                <h2>Pedidos</h2>
-                <div class="pedidos-lista">
-                    <p>Visualiza el historial y estado de tus pedidos realizados en la tienda.</p>
-                    <div class="placeholder">(Próximamente: gestión avanzada de pedidos)</div>
+            <!-- Sección Favoritos y Rutinas (unificada) -->
+            <section id="favoritos-rutinas" class="main-section" style="display:none">
+                <h2>Favoritos y Rutinas</h2>
+                <div class="favoritos-lista">
+                    <p>Descubre, guarda y organiza tus productos, rutinas o publicaciones favoritas.</p>
+                    <div class="placeholder">(Próximamente: gestión avanzada de favoritos y rutinas)</div>
                 </div>
-            </section>
-            <!-- Sección Recetas -->
-            <section id="recetas" class="main-section" style="display:none">
-                <h2>Recetas</h2>
-                <div class="recetas-lista">
-                    <p>Descubre, guarda y organiza recetas de nutrición y belleza personalizadas.</p>
-                    <div class="placeholder">(Próximamente: gestión avanzada de recetas)</div>
-                </div>
-            </section>
-            <!-- Sección Rutinas -->
-            <section id="rutinas" class="main-section" style="display:none">
-                <h2>Rutinas</h2>
                 <div class="rutinas-lista">
                     <p>Organiza y consulta tus rutinas de cuidado personal favoritas.</p>
-                    <div class="placeholder">(Próximamente: gestión avanzada de rutinas)</div>
+                    <div class="placeholder">(Próximamente: gestión avanzada de favoritos y rutinas)</div>
                 </div>
             </section>
             <!-- Buscador global -->
@@ -705,30 +673,29 @@
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('loggedUser', usuario);
     }
-    // Menú lateral desplegable
-    const menuBtn = document.getElementById('menuBtn');
-    const sideMenu = document.getElementById('sideMenu');
-    const sideLinks = document.querySelectorAll('.side-link');
-    const sections = document.querySelectorAll('.main-section');
-    let menuVisible = false;
-    menuBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        menuVisible = !menuVisible;
-        sideMenu.classList.toggle('show', menuVisible);
-    });
-    document.addEventListener('click', function(e) {
-        if (menuVisible && !sideMenu.contains(e.target) && e.target !== menuBtn) {
-            sideMenu.classList.remove('show');
-            menuVisible = false;
-        }
-    });
-    // Mejorar la lógica de navegación para nuevas secciones
-    sideLinks.forEach(btn => {
-        btn.addEventListener('click', function() {
-            sections.forEach(sec => sec.style.display = 'none');
-            document.getElementById(this.dataset.section).style.display = 'block';
-            sideMenu.classList.remove('show');
-            menuVisible = false;
+    // --- Lógica de navegación horizontal ---
+    document.querySelectorAll('.nav-link').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.main-section').forEach(sec => sec.style.display = 'none');
+            const sec = document.getElementById(this.dataset.section);
+            if(sec) sec.style.display = 'block';
+            if(this.dataset.section === 'tienda') {
+                const usuario = localStorage.getItem('loggedUser');
+                const userData = JSON.parse(localStorage.getItem('user_' + usuario));
+                mostrarTiendaPersonalizada(userData);
+            }
+            if(this.dataset.section === 'carrito') {
+                renderCarrito();
+            }
+            if(this.dataset.section === 'perfil') {
+                cargarPerfil();
+            }
+            if(this.dataset.section === 'feed-recomendaciones') {
+                const usuario = localStorage.getItem('loggedUser');
+                const userData = JSON.parse(localStorage.getItem('user_' + usuario));
+                mostrarFeedRecomendaciones(userData);
+            }
         });
     });
     // Mostrar preferencias actuales en configuración
@@ -829,14 +796,12 @@
     // (Ya implementado en CSS, solo asegurar que las clases y elementos estén presentes y bien estructurados)
     // --- Datos de productos personalizados ---
     const productosTienda = [
-        // Nutrición
-        {categoria: 'nutricion', sub: 'deficiencias', nombre: 'Centrum Multivitamínico', precio: 15, marca: 'Centrum', descripcion: 'Suplemento vitamínico y mineral para cubrir deficiencias.', id: 'cent1'},
-        {categoria: 'nutricion', sub: 'deficiencias', nombre: 'Ensure Nutrición Enteral', precio: 30, marca: 'Ensure', descripcion: 'Bebida nutricional para necesidades especiales.', id: 'ens1'},
-        {categoria: 'nutricion', sub: 'sobrepeso', nombre: 'SlimFast Batido', precio: 20, marca: 'SlimFast', descripcion: 'Batido para control de peso y nutrición equilibrada.', id: 'slim1'},
-        // Cabello
-        {categoria: 'cabello', sub: 'caida', nombre: 'Nioxin Shampoo', precio: 25, marca: 'Nioxin', descripcion: 'Champú para fortalecer y estimular el crecimiento del cabello.', id: 'niox1'},
-        {categoria: 'cabello', sub: 'caspa', nombre: 'Head & Shoulders Anticaspa', precio: 12, marca: 'Head & Shoulders', descripcion: 'Champú para eliminar la caspa y aliviar la picazón.', id: 'hs1'},
-        {categoria: 'cabello', sub: 'seco', nombre: 'Moroccanoil Mascarilla', precio: 22, marca: 'Moroccanoil', descripcion: 'Mascarilla hidratante para cabello seco y dañado.', id: 'moro1'},
+        {categoria: 'nutricion', sub: 'deficiencias', nombre: 'Centrum Multivitamínico', precio: 15, marca: 'Centrum', descripcion: 'Suplemento vitamínico y mineral para cubrir deficiencias.', id: 'cent1', imagen: 'https://m.media-amazon.com/images/I/61QwQwQwQwL._AC_SY355_.jpg'},
+        {categoria: 'nutricion', sub: 'deficiencias', nombre: 'Ensure Nutrición Enteral', precio: 30, marca: 'Ensure', descripcion: 'Bebida nutricional para necesidades especiales.', id: 'ens1', imagen: 'https://m.media-amazon.com/images/I/71QwQwQwQwL._AC_SY355_.jpg'},
+        {categoria: 'nutricion', sub: 'sobrepeso', nombre: 'SlimFast Batido', precio: 20, marca: 'SlimFast', descripcion: 'Batido para control de peso y nutrición equilibrada.', id: 'slim1', imagen: 'https://m.media-amazon.com/images/I/81QwQwQwQwL._AC_SY355_.jpg'},
+        {categoria: 'cabello', sub: 'caida', nombre: 'Nioxin Shampoo', precio: 25, marca: 'Nioxin', descripcion: 'Champú para fortalecer y estimular el crecimiento del cabello.', id: 'niox1', imagen: 'https://m.media-amazon.com/images/I/51QwQwQwQwL._AC_SY355_.jpg'},
+        {categoria: 'cabello', sub: 'caspa', nombre: 'Head & Shoulders Anticaspa', precio: 12, marca: 'Head & Shoulders', descripcion: 'Champú para eliminar la caspa y aliviar la picazón.', id: 'hs1', imagen: 'https://m.media-amazon.com/images/I/61QwQwQwQwL._AC_SY355_.jpg'},
+        {categoria: 'cabello', sub: 'seco', nombre: 'Moroccanoil Mascarilla', precio: 22, marca: 'Moroccanoil', descripcion: 'Mascarilla hidratante para cabello seco y dañado.', id: 'moro1', imagen: 'https://m.media-amazon.com/images/I/71QwQwQwQwL._AC_SY355_.jpg'}
         // ...agrega más productos según lo personalizado...
     ];
     // --- Mostrar productos personalizados según usuario ---
@@ -856,6 +821,10 @@
                 productos = productos.concat(productosTienda.filter(p => p.categoria==='cabello' && p.sub===sub));
             });
         }
+        // Mostrar todos los productos si no hay preferencias
+        if(productos.length === 0) {
+            productos = productosTienda;
+        }
         if(productos.length === 0) {
             cont.innerHTML = '<p>No hay productos personalizados para tus preferencias.</p>';
         } else {
@@ -864,6 +833,18 @@
             });
         }
         cargarResenas();
+    }
+    // Mostrar tienda automáticamente al entrar en la sección tienda
+    const tiendaSection = document.getElementById('tienda');
+    if(tiendaSection) {
+        const observerTienda = new MutationObserver(() => {
+            if (tiendaSection.style.display === 'block') {
+                const usuario = localStorage.getItem('loggedUser');
+                const userData = JSON.parse(localStorage.getItem('user_' + usuario));
+                mostrarTiendaPersonalizada(userData);
+            }
+        });
+        observerTienda.observe(tiendaSection, { attributes: true, attributeFilter: ['style'] });
     }
     // --- Carrito de compras ---
     let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
@@ -897,22 +878,26 @@
         localStorage.setItem('carrito', JSON.stringify(carrito));
         alert('Producto añadido al carrito');
     }
-    // Modificar renderProducto para añadir botón de carrito
+    // Modificar renderProducto para mostrar imagen y precio destacado
     function renderProducto(prod) {
-        return `<div class="producto" data-id="${prod.id}">
-            <h3>${prod.nombre} <span style="font-size:0.9em;color:#888;">(${prod.marca})</span></h3>
-            <p>${prod.descripcion}</p>
-            <p><b>Precio:</b> $${prod.precio}</p>
-            <button class="btn-carrito">Añadir al carrito</button>
-            <div class="calificacion">
-                <span>Califica:</span> ${[1,2,3,4,5].map(n=>`<span class="estrella" data-valor="${n}">&#9733;</span>`).join('')}
-                <span class="promedio"></span>
-            </div>
-            <div class="resenas">
-                <h4>Reseñas</h4>
-                <div class="lista-resenas"></div>
-                <textarea class="nueva-resena" placeholder="Escribe tu reseña..."></textarea>
-                <button class="btn-resena">Enviar reseña</button>
+        const imagen = prod.imagen || 'https://via.placeholder.com/120x120?text=Producto';
+        return `<div class="producto" data-id="${prod.id}" style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem;">
+            <img src="${imagen}" alt="${prod.nombre}" style="width:120px;height:120px;object-fit:cover;border-radius:10px;border:1px solid #ccc;">
+            <div style="flex:1;">
+                <h3 style="margin:0 0 0.3em 0;">${prod.nombre} <span style="font-size:0.9em;color:#888;">(${prod.marca})</span></h3>
+                <p style="margin:0 0 0.5em 0;">${prod.descripcion}</p>
+                <p style="font-size:1.2em;color:#388e3c;"><b>Precio:</b> $${prod.precio}</p>
+                <button class="btn-carrito">Añadir al carrito</button>
+                <div class="calificacion">
+                    <span>Califica:</span> ${[1,2,3,4,5].map(n=>`<span class="estrella" data-valor="${n}">&#9733;</span>`).join('')}
+                    <span class="promedio"></span>
+                </div>
+                <div class="resenas">
+                    <h4>Reseñas</h4>
+                    <div class="lista-resenas"></div>
+                    <textarea class="nueva-resena" placeholder="Escribe tu reseña..."></textarea>
+                    <button class="btn-resena">Enviar reseña</button>
+                </div>
             </div>
         </div><hr>`;
     }
@@ -1147,11 +1132,12 @@
         observerFeed.observe(feedSection, { attributes: true, attributeFilter: ['style'] });
     }
     // --- Buscador global interactivo ---
+    // (modificar el buscador para incluir datos de cuidado personal)
     const buscadorSection = document.getElementById('buscador');
     const busquedaGlobal = document.createElement('input');
     busquedaGlobal.type = 'text';
     busquedaGlobal.id = 'busqueda-global';
-    busquedaGlobal.placeholder = 'Buscar usuarios, productos, rutinas o recetas...';
+    busquedaGlobal.placeholder = 'Buscar usuarios, productos, rutinas, recetas o información de cuidado personal...';
     const resultadosGlobal = document.createElement('div');
     resultadosGlobal.id = 'resultados-global';
     if(buscadorSection) {
@@ -1173,6 +1159,26 @@
             if(productosFiltrados.length) {
                 html += '<h3>Productos</h3>' + productosFiltrados.map(p => `<div class="producto" data-id="${p.id}">${renderProducto(p)}</div>`).join('');
             }
+            // Buscar datos de cuidado personal
+            const datosFiltrados = datosCuidadoPersonal.filter(d =>
+                d.nombre.toLowerCase().includes(val) ||
+                d.categoria.toLowerCase().includes(val) ||
+                d.problemas.toLowerCase().includes(val) ||
+                d.soluciones.toLowerCase().includes(val) ||
+                d.productos.toLowerCase().includes(val) ||
+                d.marcas.toLowerCase().includes(val)
+            );
+            if(datosFiltrados.length) {
+                html += '<h3>Información de cuidado personal</h3>' + datosFiltrados.map(d => `
+                    <div class="producto" style="background:#fffbe7;box-shadow:none;border:1px solid #ffd28a;margin-bottom:1.2rem;">
+                        <h4 style="color:#7b3f00;">${d.nombre} <span style="font-size:0.9em;color:#888;">(${d.categoria})</span></h4>
+                        <p><b>Problema:</b> ${d.problemas}</p>
+                        <p><b>Solución:</b> ${d.soluciones}</p>
+                        <p><b>Productos:</b> ${d.productos}</p>
+                        <p><b>Marcas:</b> ${d.marcas}</p>
+                    </div>
+                `).join('');
+            }
             // Rutinas y recetas ficticias
             const rutinas = getRutinasEjemplo().filter(r => r.titulo.toLowerCase().includes(val) || r.descripcion.toLowerCase().includes(val));
             if(rutinas.length) {
@@ -1187,154 +1193,6 @@
             cargarInteraccionesFeed();
         });
     }
-    function verPerfilBuscado(usuario) {
-        localStorage.setItem('loggedUser', usuario);
-        cargarPerfil();
-        document.querySelectorAll('.main-section').forEach(sec => sec.style.display = 'none');
-        document.getElementById('perfil').style.display = 'block';
-    }
-    // --- Feed tipo red social en Inicio (mejorado: likes y guardados reversibles, imágenes/videos) ---
-    function renderPublicacion(pub, tipo, opciones = {}) {
-        // Si tiene imagen o video, mostrarlo
-        let media = '';
-        if(pub.imagen) media = `<img src="${pub.imagen}" alt="${pub.titulo}">`;
-        if(pub.video) media = `<video src="${pub.video}" controls></video>`;
-        // Estado de like y guardado
-        let liked = localStorage.getItem('likes_' + pub.id) === 'true';
-        let guardado = localStorage.getItem('guardado_' + pub.id) === 'true';
-        return `<div class="publicacion" data-id="${pub.id}" data-tipo="${tipo}">
-            <div class="pub-header"><b>@${pub.usuario}</b> <span class="pub-tipo">${tipo==='rutina'?'Rutina':'Receta'}</span></div>
-            <h4>${pub.titulo}</h4>
-            ${media}
-            <p>${pub.descripcion}</p>
-            <div class="pub-actions">
-                <button class="btn-like${liked?' liked':''}">❤️ <span class="like-count"></span></button>
-                <button class="btn-coment">💬</button>
-                <button class="btn-guardar${guardado?' guardado':''}">⭐</button>
-            </div>
-            <div class="pub-comentarios" style="display:none;"></div>
-        </div>`;
-    }
-    function cargarInteraccionesFeed() {
-        document.querySelectorAll('.publicacion').forEach(pubDiv => {
-            const id = pubDiv.dataset.id;
-            // Likes reversibles
-            const btnLike = pubDiv.querySelector('.btn-like');
-            let liked = localStorage.getItem('likes_' + id) === 'true';
-            let likesCount = parseInt(localStorage.getItem('likes_count_' + id) || '0');
-            btnLike.querySelector('.like-count').textContent = likesCount;
-            btnLike.classList.toggle('liked', liked);
-            btnLike.onclick = function() {
-                liked = !liked;
-                localStorage.setItem('likes_' + id, liked);
-                if(liked) likesCount++;
-                else likesCount = Math.max(0, likesCount-1);
-                localStorage.setItem('likes_count_' + id, likesCount);
-                btnLike.querySelector('.like-count').textContent = likesCount;
-                btnLike.classList.toggle('liked', liked);
-                renderPerfilPublicaciones();
-            };
-            // Guardar reversibles
-            const btnGuardar = pubDiv.querySelector('.btn-guardar');
-            let guardado = localStorage.getItem('guardado_' + id) === 'true';
-            btnGuardar.classList.toggle('guardado', guardado);
-            btnGuardar.onclick = function() {
-                guardado = !guardado;
-                localStorage.setItem('guardado_' + id, guardado);
-                btnGuardar.classList.toggle('guardado', guardado);
-                if(guardado) guardarEnCarpeta(id, pubDiv.dataset.tipo);
-                renderPerfilPublicaciones();
-            };
-            // Comentarios
-            const btnComent = pubDiv.querySelector('.btn-coment');
-            btnComent.onclick = function() {
-                const comentariosDiv = pubDiv.querySelector('.pub-comentarios');
-                if(comentariosDiv.style.display==='none') {
-                    comentariosDiv.style.display='block';
-                    renderComentarios(id, pubDiv.dataset.tipo, comentariosDiv);
-                } else {
-                    comentariosDiv.style.display='none';
-                }
-            };
-        });
-    }
-    // --- Perfil: publicaciones propias, guardadas y con like ---
-    function renderPerfilPublicaciones() {
-        const usuario = localStorage.getItem('loggedUser');
-        const userData = JSON.parse(localStorage.getItem('user_' + usuario));
-        const cont = document.getElementById('perfil-publicaciones');
-        if(!cont) return;
-        let html = '';
-        // Publicaciones propias (ejemplo: rutinas/recetas creadas por el usuario)
-        const propias = getRutinasEjemplo().concat(getRecetasEjemplo()).filter(p => p.usuario === usuario);
-        if(propias.length) {
-            html += '<h3>Mis publicaciones</h3><div class="publicaciones-perfil">' + propias.map(p => renderPublicacion(p, p.tipo)).join('') + '</div>';
-        }
-        // Publicaciones guardadas
-        const guardadas = getRutinasEjemplo().concat(getRecetasEjemplo()).filter(p => localStorage.getItem('guardado_' + p.id) === 'true');
-        if(guardadas.length) {
-            html += '<h3>Guardados ⭐</h3><div class="publicaciones-perfil">' + guardadas.map(p => renderPublicacion(p, p.tipo)).join('') + '</div>';
-        }
-        // Publicaciones con like
-        const likes = getRutinasEjemplo().concat(getRecetasEjemplo()).filter(p => localStorage.getItem('likes_' + p.id) === 'true');
-        if(likes.length) {
-            html += '<h3>Me gusta ❤️</h3><div class="publicaciones-perfil">' + likes.map(p => renderPublicacion(p, p.tipo)).join('') + '</div>';
-        }
-        cont.innerHTML = html || '<p>No tienes publicaciones propias, guardadas ni con like.</p>';
-        cargarInteraccionesFeed();
-    }
-    // Mostrar publicaciones en perfil al entrar
-    const perfilSection2 = document.getElementById('perfil');
-    if(perfilSection2) {
-        const observerPerfil2 = new MutationObserver(() => {
-            if (perfilSection2.style.display === 'block') {
-                renderPerfilPublicaciones();
-            }
-        });
-        observerPerfil2.observe(perfilSection2, { attributes: true, attributeFilter: ['style'] });
-    }
-    // --- Guardar en carpetas ---
-    function guardarEnCarpeta(id, tipo) {
-    let carpetas = JSON.parse(localStorage.getItem('carpetas_guardadas') || '[]');
-    let nombre = prompt('¿En qué carpeta quieres guardar esto? (puedes crear una nueva)');
-    if(!nombre) return;
-    let carpeta = carpetas.find(c => c.nombre === nombre);
-    if(!carpeta) {
-        carpeta = {nombre, items:[]};
-        carpetas.push(carpeta);
-    }
-    if(!carpeta.items.includes(id)) carpeta.items.push(id);
-    localStorage.setItem('carpetas_guardadas', JSON.stringify(carpetas));
-}
-// Mostrar feed en inicio según preferencias
-function renderFeedPersonalizado() {
-    const usuario = localStorage.getItem('loggedUser');
-    const userData = JSON.parse(localStorage.getItem('user_' + usuario));
-    let feed = [];
-    // Mostrar rutinas y recetas relacionadas a preferencias
-    const rutinas = getRutinasEjemplo().filter(r =>
-        (userData.cabello && r.descripcion.toLowerCase().match(new RegExp(userData.cabello.join('|'),'i')))
-        || (userData.piel && r.descripcion.toLowerCase().match(new RegExp(userData.piel.join('|'),'i')))
-        || (userData.nutricion && r.descripcion.toLowerCase().match(new RegExp(userData.nutricion.join('|'),'i')))
-    );
-    const recetas = getRecetasEjemplo().filter(r =>
-        (userData.nutricion && r.descripcion.toLowerCase().match(new RegExp(userData.nutricion.join('|'),'i')))
-    );
-    feed = rutinas.concat(recetas);
-    if(feed.length===0) feed = getRutinasEjemplo().concat(getRecetasEjemplo());
-    document.querySelector('#inicio .feed').innerHTML = feed.map(pub => renderPublicacion(pub, pub.tipo)).join('');
-    cargarInteraccionesFeed();
-}
-// Mostrar feed al entrar en inicio
-const inicioSection2 = document.getElementById('inicio');
-if(inicioSection2) {
-    const observerFeed2 = new MutationObserver(() => {
-        if (inicioSection2.style.display === 'block') {
-            renderFeedPersonalizado();
-        }
-    });
-    observerFeed2.observe(inicioSection2, { attributes: true, attributeFilter: ['style'] });
-}
     </script>
 </body>
 </html>
