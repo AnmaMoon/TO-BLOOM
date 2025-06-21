@@ -280,7 +280,6 @@
                 <a href="#" class="nav-link" data-section="perfil">Perfil</a>
                 <a href="#" class="nav-link" data-section="configuracion">Configuración</a>
                 <a href="#" class="nav-link" data-section="favoritos-rutinas">Favoritos y Rutinas</a>
-                <a href="#" class="nav-link" data-section="buscador">Buscador</a>
             </nav>
         </header>
         <main>
@@ -301,59 +300,46 @@
                   </p>
                 </section>
             </section>
+            <section id="feed-recomendaciones" class="main-section" style="display:none">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="section-title mb-0">Feed de Artistas</h2>
+                <input type="text" id="feed-search" class="form-control w-50" placeholder="Buscar tutorial, artista o rutina...">
+              </div>
+              <div id="feed-list" class="row g-4"></div>
+            </section>
             <section id="tienda" class="main-section" style="display:none">
-                <h2 class="section-title">Tienda personalizada</h2>
-                <input type="text" id="busqueda-tienda" class="form-control mb-3" placeholder="Buscar producto..." />
-                <div id="productos-tienda"></div>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="section-title mb-0">Tienda</h2>
+                <input type="text" id="busqueda-tienda" class="form-control w-50" placeholder="Buscar producto...">
+              </div>
+              <div id="productos-tienda" class="row g-4"></div>
             </section>
             <section id="carrito" class="main-section" style="display:none">
-                <h2 class="section-title">Carrito de compras</h2>
-                <div id="carrito-lista"></div>
-                <div id="carrito-total" class="my-3"></div>
-                <button id="btn-comprar" class="btn btn-success" style="display:none;">Comprar</button>
-                <div id="compra-form" style="display:none; margin-top:1.5rem;">
-                    <h3>Datos para la compra</h3>
-                    <form id="form-compra">
-                        <label>Nombre completo:<br><input type="text" id="compra-nombre" class="form-control" required></label><br>
-                        <label>Dirección:<br><input type="text" id="compra-direccion" class="form-control" required></label><br>
-                        <label>Email:<br><input type="email" id="compra-email" class="form-control" required></label><br>
-                        <label>Método de pago:<br>
-                            <select id="compra-pago" class="form-select" required>
-                                <option value="tarjeta">Tarjeta de crédito/débito</option>
-                                <option value="paypal">PayPal</option>
-                                <option value="transferencia">Transferencia bancaria</option>
-                            </select>
-                        </label><br>
-                        <button type="submit" class="btn btn-primary">Finalizar compra</button>
-                    </form>
-                    <div id="compra-exito" class="text-success mt-3" style="display:none;">¡Compra realizada con éxito!</div>
-                </div>
+              <h2 class="section-title">Carrito de compras</h2>
+              <div id="carrito-lista"></div>
+              <div id="carrito-total" class="my-3"></div>
+              <button id="btn-comprar" class="btn btn-success" style="display:none;">Comprar</button>
+              <div id="compra-form" style="display:none; margin-top:1.5rem;">
+                <h3>Datos para la compra</h3>
+                <form id="form-compra">
+                  <label>Nombre completo:<br><input type="text" id="compra-nombre" class="form-control" required></label><br>
+                  <label>Dirección:<br><input type="text" id="compra-direccion" class="form-control" required></label><br>
+                  <label>Email:<br><input type="email" id="compra-email" class="form-control" required></label><br>
+                  <label>Método de pago:<br>
+                    <select id="compra-pago" class="form-select" required>
+                      <option value="tarjeta">Tarjeta de crédito/débito</option>
+                      <option value="paypal">PayPal</option>
+                      <option value="transferencia">Transferencia bancaria</option>
+                    </select>
+                  </label><br>
+                  <button type="submit" class="btn btn-primary">Finalizar compra</button>
+                </form>
+                <div id="compra-exito" class="text-success mt-3" style="display:none;">¡Compra realizada con éxito!</div>
+              </div>
             </section>
-            <section id="perfil" class="main-section" style="display:none">
-              <h2 class="section-title">Perfil</h2>
-              <div id="perfil-info" class="row mb-4 align-items-center">
-                <div class="col-md-4 text-center">
-                  <img id="perfil-foto" src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/user.svg" alt="Foto de perfil" class="rounded-circle shadow bg-white" style="width:130px;height:130px;object-fit:cover;border:3px solid #d63384;">
-                </div>
-                <div class="col-md-8">
-                  <div class="mb-2">
-                    <span class="fw-bold">Usuario:</span> <span id="perfil-usuario" class="text-dark">-</span>
-                  </div>
-                  <div class="mb-2">
-                    <span class="fw-bold">Nombre completo:</span> <span id="perfil-nombre" class="text-dark">-</span>
-                  </div>
-                  <div class="mb-2">
-                    <span class="fw-bold">Email:</span> <span id="perfil-email" class="text-dark">-</span>
-                  </div>
-                </div>
-              </div>
-              <div id="perfil-defectos" class="mb-4 p-3 bg-light rounded shadow-sm">
-                <h4 class="mb-2">Mis problemas de piel <span class="badge bg-secondary">Privado</span></h4>
-                <textarea id="defectos-text" class="form-control mb-2" placeholder="Describe aquí los problemas que enfrentas con tu piel..." rows="3" readonly></textarea>
-              </div>
-              <div id="perfil-publicaciones"></div>
-              <div id="seguidores"></div>
-              <div id="perfil-bio"></div>
+            <section id="favoritos-rutinas" class="main-section" style="display:none">
+              <h2 class="section-title">Favoritos y Rutinas</h2>
+              <div id="favoritos-lista" class="row g-4"></div>
             </section>
             <!-- Add more sections as needed, styled with Bootstrap -->
         </main>
