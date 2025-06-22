@@ -8,6 +8,25 @@
         <link rel="stylesheet" href="style.css">
     </head>
 <body>
+    <!-- Página principal de bienvenida -->
+    <div id="main-landing" style="display:block; max-width:600px; margin:3rem auto; background:#fff8fc; border-radius:16px; box-shadow:0 2px 16px #e9d8fd; padding:2rem; text-align:center;">
+        <h1 style="color:#b48be6;">Bienvenido a Florecer</h1>
+        <p style="font-size:1.2rem; margin-bottom:2rem;">Una comunidad dedicada al crecimiento personal, el bienestar y el apoyo mutuo.</p>
+        <section style="margin-bottom:2rem;">
+            <h2 style="color:#a277c7;">¿Quiénes somos?</h2>
+            <p>Somos un grupo de personas apasionadas por el desarrollo personal y el bienestar emocional. Nuestra misión es crear un espacio seguro donde puedas compartir, aprender y florecer junto a otros.</p>
+        </section>
+        <section style="margin-bottom:2rem;">
+            <h2 style="color:#a277c7;">Contacto</h2>
+            <p>¿Tienes preguntas o sugerencias? Escríbenos a <a href="mailto:contacto@florecer.com" style="color:#b48be6;">contacto@florecer.com</a> o síguenos en nuestras redes sociales.</p>
+        </section>
+        <button id="ir-login" style="background:#b48be6; color:#fff; border:none; border-radius:8px; padding:0.7rem 2rem; font-size:1rem; cursor:pointer;">Iniciar sesión</button>
+    </div>
+    <!-- Mariposas decorativas fondo -->
+<svg class="butterfly b1" viewBox="0 0 64 64"><path d="M32 36C32 36 28 24 16 24C8 24 8 36 16 36C24 36 32 36 32 36Z" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><path d="M32 36C32 36 36 24 48 24C56 24 56 36 48 36C40 36 32 36 32 36Z" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><ellipse cx="32" cy="44" rx="8" ry="12" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><circle cx="32" cy="36" r="2.5" fill="#b48be6"/></svg>
+<svg class="butterfly b2" viewBox="0 0 64 64"><path d="M32 36C32 36 28 24 16 24C8 24 8 36 16 36C24 36 32 36 32 36Z" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><path d="M32 36C32 36 36 24 48 24C56 24 56 36 48 36C40 36 32 36 32 36Z" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><ellipse cx="32" cy="44" rx="8" ry="12" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><circle cx="32" cy="36" r="2.5" fill="#b48be6"/></svg>
+<svg class="butterfly b3" viewBox="0 0 64 64"><path d="M32 36C32 36 28 24 16 24C8 24 8 36 16 36C24 36 32 36 32 36Z" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><path d="M32 36C32 36 36 24 48 24C56 24 56 36 48 36C40 36 32 36 32 36Z" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><ellipse cx="32" cy="44" rx="8" ry="12" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><circle cx="32" cy="36" r="2.5" fill="#b48be6"/></svg>
+<svg class="butterfly b4" viewBox="0 0 64 64"><path d="M32 36C32 36 28 24 16 24C8 24 8 36 16 36C24 36 32 36 32 36Z" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><path d="M32 36C32 36 36 24 48 24C56 24 56 36 48 36C40 36 32 36 32 36Z" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><ellipse cx="32" cy="44" rx="8" ry="12" stroke="#b48be6" stroke-width="2.5" fill="#e9d8fd"/><circle cx="32" cy="36" r="2.5" fill="#b48be6"/></svg>
     <div id="auth-container">
         <div id="login-form" class="auth-form">
             <h2>Iniciar sesión</h2>
@@ -111,15 +130,12 @@
         </header>
         <main>
             <section id="inicio" class="main-section">
-                <h2 id="bienvenida-usuario">Inicio</h2>
-                <div class="feed">
-                    <article class="post">
-                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Bienestar" />
-                        <div>
-                            <h3>¡Cuida tu mente y cuerpo!</h3>
-                            <p>Descubre rutinas diarias para sentirte mejor cada día.</p>
-                        </div>
-                    </article>
+                <h2 id="bienvenida-usuario">¡Bienvenido, <span id='nombre-usuario-bienvenida'></span>!</h2>
+                <div class="bienvenida-texto" style="margin-bottom:1.5rem;font-size:1.2rem;color:#7b3f00;">
+                    Nos alegra verte de nuevo. Aquí tienes recomendaciones y publicaciones recientes para tu bienestar físico, belleza y salud.
+                </div>
+                <div id="feed-inicio" class="feed">
+                    <!-- Publicaciones tipo red social aparecerán aquí -->
                 </div>
             </section>
             <!-- Nutrición -->
@@ -468,6 +484,7 @@
                 <div id="perfil-publicaciones" style="margin-top:2rem;"></div>
                 <div id="seguidores" style="margin-top:1rem;"></div>
                 <div id="perfil-bio" style="margin-top:1rem;"></div>
+                <div id="seguidores-seguidos" style="margin-top:1rem;font-size:1.1em;display:flex;gap:1.5rem;"></div>
             </section>
             <section id="feed-recomendaciones" class="main-section" style="display:none">
                 <h2>Recomendaciones para ti</h2>
@@ -505,6 +522,13 @@
         </footer>
     </div>
     <script>
+    // Mostrar login y ocultar landing
+    document.getElementById('ir-login').onclick = function() {
+        document.getElementById('main-landing').style.display = 'none';
+        document.getElementById('auth-container').style.display = 'block';
+    };
+    // Ocultar login al inicio
+    document.getElementById('auth-container').style.display = 'none';
     // Autenticación simple con localStorage
     const authContainer = document.getElementById('auth-container');
     const mainContent = document.getElementById('main-content');
@@ -749,6 +773,7 @@
     // --- Mejorar perfil IG/FB/TikTok ---
     // Añadir biografía editable, seguidores/seguidos, publicaciones propias, guardadas, rutinas y recetas.
     // (Definición ÚNICA de cargarPerfil)
+    // --- PERFIL: Mostrar seguidores y seguidos de forma visual ---
     function cargarPerfil() {
         const usuario = localStorage.getItem('loggedUser');
         if (!usuario) return;
@@ -776,262 +801,21 @@
                 cargarPerfil();
             }
         };
-        // Seguidores/seguidos (simulado)
-        let seguidores = userData.seguidores || Math.floor(Math.random()*100+10);
-        let seguidos = userData.seguidos || Math.floor(Math.random()*50+5);
-        let segDiv = document.getElementById('seguidores');
+        // Seguidores/seguidos (simulado y persistente, visual)
+        if(!userData.seguidores) userData.seguidores = Math.floor(Math.random()*100+10);
+        if(!userData.seguidos) userData.seguidos = Math.floor(Math.random()*50+5);
+        localStorage.setItem('user_' + usuario, JSON.stringify(userData));
+        let segDiv = document.getElementById('seguidores-seguidos');
         if(!segDiv) {
-            segDiv = document.createElement('span');
-            segDiv.id = 'seguidores';
+            segDiv = document.createElement('div');
+            segDiv.id = 'seguidores-seguidos';
+            segDiv.style.marginTop = '1rem';
+            segDiv.style.fontSize = '1.1em';
+            segDiv.style.display = 'flex';
+            segDiv.style.gap = '1.5rem';
             document.getElementById('perfil-info').appendChild(segDiv);
         }
-        segDiv.textContent = seguidores + ' seguidores';
-        let seg2Div = document.getElementById('seguidos');
-        if(!seg2Div) {
-            seg2Div = document.createElement('span');
-            seg2Div.id = 'seguidos';
-            document.getElementById('perfil-info').appendChild(seg2Div);
-        }
-        seg2Div.textContent = seguidos + ' seguidos';
-        // Defectos personales (solo local)
-        document.getElementById('defectos-text').value = userData.defectos || '';
-    }
-    // --- Menú lateral hamburguesa ---
-    document.getElementById('menuBtn').innerHTML = '<span style="font-size:2em;line-height:1;">&#9776;</span>';
-    // --- Mejorar experiencia visual y responsiva ---
-    // (Ya implementado en CSS, solo asegurar que las clases y elementos estén presentes y bien estructurados)
-    // --- Datos de productos personalizados ---
-    const productosTienda = [
-        {categoria: 'nutricion', sub: 'deficiencias', nombre: 'Centrum Multivitamínico', precio: 15, marca: 'Centrum', descripcion: 'Suplemento vitamínico y mineral para cubrir deficiencias.', id: 'cent1', imagen: 'https://m.media-amazon.com/images/I/61QwQwQwQwL._AC_SY355_.jpg'},
-        {categoria: 'nutricion', sub: 'deficiencias', nombre: 'Ensure Nutrición Enteral', precio: 30, marca: 'Ensure', descripcion: 'Bebida nutricional para necesidades especiales.', id: 'ens1', imagen: 'https://m.media-amazon.com/images/I/71QwQwQwQwL._AC_SY355_.jpg'},
-        {categoria: 'nutricion', sub: 'sobrepeso', nombre: 'SlimFast Batido', precio: 20, marca: 'SlimFast', descripcion: 'Batido para control de peso y nutrición equilibrada.', id: 'slim1', imagen: 'https://m.media-amazon.com/images/I/81QwQwQwQwL._AC_SY355_.jpg'},
-        {categoria: 'cabello', sub: 'caida', nombre: 'Nioxin Shampoo', precio: 25, marca: 'Nioxin', descripcion: 'Champú para fortalecer y estimular el crecimiento del cabello.', id: 'niox1', imagen: 'https://m.media-amazon.com/images/I/51QwQwQwQwL._AC_SY355_.jpg'},
-        {categoria: 'cabello', sub: 'caspa', nombre: 'Head & Shoulders Anticaspa', precio: 12, marca: 'Head & Shoulders', descripcion: 'Champú para eliminar la caspa y aliviar la picazón.', id: 'hs1', imagen: 'https://m.media-amazon.com/images/I/61QwQwQwQwL._AC_SY355_.jpg'},
-        {categoria: 'cabello', sub: 'seco', nombre: 'Moroccanoil Mascarilla', precio: 22, marca: 'Moroccanoil', descripcion: 'Mascarilla hidratante para cabello seco y dañado.', id: 'moro1', imagen: 'https://m.media-amazon.com/images/I/71QwQwQwQwL._AC_SY355_.jpg'}
-        // ...agrega más productos según lo personalizado...
-    ];
-    // --- Mostrar productos personalizados según usuario ---
-    function mostrarTiendaPersonalizada(userData) {
-        document.querySelectorAll('.main-section').forEach(sec => sec.style.display = 'none');
-        document.getElementById('tienda').style.display = 'block';
-        const cont = document.getElementById('productos-tienda');
-        cont.innerHTML = '';
-        let productos = [];
-        if(userData.nutricion) {
-            userData.nutricion.forEach(sub => {
-                productos = productos.concat(productosTienda.filter(p => p.categoria==='nutricion' && p.sub===sub));
-            });
-        }
-        if(userData.cabello) {
-            userData.cabello.forEach(sub => {
-                productos = productos.concat(productosTienda.filter(p => p.categoria==='cabello' && p.sub===sub));
-            });
-        }
-        // Mostrar todos los productos si no hay preferencias
-        if(productos.length === 0) {
-            productos = productosTienda;
-        }
-        if(productos.length === 0) {
-            cont.innerHTML = '<p>No hay productos personalizados para tus preferencias.</p>';
-        } else {
-            productos.forEach(prod => {
-                cont.innerHTML += renderProducto(prod);
-            });
-        }
-        cargarResenas();
-    }
-    // Mostrar tienda automáticamente al entrar en la sección tienda
-    const tiendaSection = document.getElementById('tienda');
-    if(tiendaSection) {
-        const observerTienda = new MutationObserver(() => {
-            if (tiendaSection.style.display === 'block') {
-                const usuario = localStorage.getItem('loggedUser');
-                const userData = JSON.parse(localStorage.getItem('user_' + usuario));
-                mostrarTiendaPersonalizada(userData);
-            }
-        });
-        observerTienda.observe(tiendaSection, { attributes: true, attributeFilter: ['style'] });
-    }
-    // --- Carrito de compras ---
-    let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
-    function renderCarrito() {
-        document.querySelectorAll('.main-section').forEach(sec => sec.style.display = 'none');
-        document.getElementById('carrito').style.display = 'block';
-        const lista = document.getElementById('carrito-lista');
-        if(carrito.length === 0) {
-            lista.innerHTML = '<p>Tu carrito está vacío.</p>';
-            document.getElementById('carrito-total').textContent = '';
-            document.getElementById('btn-comprar').style.display = 'none';
-            return;
-        }
-        lista.innerHTML = carrito.map((item, i) =>
-            `<div class="carrito-item">
-                <b>${item.nombre}</b> (${item.marca}) - $${item.precio} <button onclick="eliminarDelCarrito(${i})">Eliminar</button>
-            </div>`
-        ).join('');
-        const total = carrito.reduce((sum, item) => sum + item.precio, 0);
-        document.getElementById('carrito-total').textContent = 'Total: $' + total;
-        document.getElementById('btn-comprar').style.display = 'inline-block';
-    }
-    function eliminarDelCarrito(idx) {
-        carrito.splice(idx, 1);
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-        renderCarrito();
-    }
-    // --- Añadir a carrito desde tienda ---
-    function agregarAlCarrito(prod) {
-        carrito.push(prod);
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-        alert('Producto añadido al carrito');
-    }
-    // Modificar renderProducto para mostrar imagen y precio destacado
-    function renderProducto(prod) {
-        const imagen = prod.imagen || 'https://via.placeholder.com/120x120?text=Producto';
-        return `<div class="producto" data-id="${prod.id}" style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem;">
-            <img src="${imagen}" alt="${prod.nombre}" style="width:120px;height:120px;object-fit:cover;border-radius:10px;border:1px solid #ccc;">
-            <div style="flex:1;">
-                <h3 style="margin:0 0 0.3em 0;">${prod.nombre} <span style="font-size:0.9em;color:#888;">(${prod.marca})</span></h3>
-                <p style="margin:0 0 0.5em 0;">${prod.descripcion}</p>
-                <p style="font-size:1.2em;color:#388e3c;"><b>Precio:</b> $${prod.precio}</p>
-                <button class="btn-carrito">Añadir al carrito</button>
-                <div class="calificacion">
-                    <span>Califica:</span> ${[1,2,3,4,5].map(n=>`<span class="estrella" data-valor="${n}">&#9733;</span>`).join('')}
-                    <span class="promedio"></span>
-                </div>
-                <div class="resenas">
-                    <h4>Reseñas</h4>
-                    <div class="lista-resenas"></div>
-                    <textarea class="nueva-resena" placeholder="Escribe tu reseña..."></textarea>
-                    <button class="btn-resena">Enviar reseña</button>
-                </div>
-            </div>
-        </div><hr>`;
-    }
-    // Delegar evento para añadir al carrito
-    function cargarResenas() {
-        document.querySelectorAll('.producto').forEach(prodDiv => {
-            const id = prodDiv.dataset.id;
-            // Calificación
-            const estrellas = prodDiv.querySelectorAll('.estrella');
-            const promedioSpan = prodDiv.querySelector('.promedio');
-            let calificaciones = JSON.parse(localStorage.getItem('calif_' + id) || '[]');
-            let promedio = calificaciones.length ? (calificaciones.reduce((a,b)=>a+b,0)/calificaciones.length).toFixed(1) : '-';
-            promedioSpan.textContent = `(${promedio}/5)`;
-            estrellas.forEach((star, idx) => {
-                star.onclick = function() {
-                    calificaciones.push(idx+1);
-                    localStorage.setItem('calif_' + id, JSON.stringify(calificaciones));
-                    cargarResenas();
-                };
-            });
-            // Reseñas
-            const lista = prodDiv.querySelector('.lista-resenas');
-            let resenas = JSON.parse(localStorage.getItem('resenas_' + id) || '[]');
-            lista.innerHTML = resenas.map(r => `<div class="resena">${r}</div>`).join('');
-            prodDiv.querySelector('.btn-resena').onclick = function() {
-                const txt = prodDiv.querySelector('.nueva-resena').value.trim();
-                if(txt) {
-                    resenas.push(txt);
-                    localStorage.setItem('resenas_' + id, JSON.stringify(resenas));
-                    cargarResenas();
-                }
-            };
-            // Añadir al carrito
-            prodDiv.querySelector('.btn-carrito').onclick = function() {
-                const prod = productosTienda.find(p => p.id === id);
-                agregarAlCarrito(prod);
-            };
-        });
-    }
-    // --- Comprar ---
-    document.getElementById('btn-comprar').onclick = function() {
-        document.getElementById('compra-form').style.display = 'block';
-    };
-    document.getElementById('form-compra').onsubmit = function(e) {
-        e.preventDefault();
-        carrito = [];
-        localStorage.setItem('carrito', '[]');
-        renderCarrito();
-        document.getElementById('compra-exito').style.display = 'block';
-        setTimeout(()=>{
-            document.getElementById('compra-exito').style.display = 'none';
-            document.getElementById('compra-form').style.display = 'none';
-        }, 2000);
-    };
-    // --- Acceso a carrito desde menú ---
-    document.querySelectorAll('.side-link').forEach(btn => {
-        if(btn.dataset.section === 'carrito') {
-            btn.addEventListener('click', function() {
-                renderCarrito();
-            });
-        }
-    });
-    // --- Bienvenida usuario ---
-    function mostrarBienvenidaUsuario() {
-        const usuario = localStorage.getItem('loggedUser');
-        if (!usuario) return;
-        const userData = JSON.parse(localStorage.getItem('user_' + usuario));
-        if (userData && userData.nombre) {
-            document.getElementById('bienvenida-usuario').innerHTML = `¡Bienvenido/a, <span style="color:#388e3c;">${userData.nombre}</span>!`;
-        } else {
-            document.getElementById('bienvenida-usuario').textContent = 'Inicio';
-        }
-    }
-    // Llamar al mostrarBienvenidaUsuario cuando se muestre la sección de inicio
-    const inicioSection = document.getElementById('inicio');
-    if(inicioSection) {
-        const observerInicio = new MutationObserver(() => {
-            if (inicioSection.style.display === 'block') {
-                mostrarBienvenidaUsuario();
-            }
-        });
-        observerInicio.observe(inicioSection, { attributes: true, attributeFilter: ['style'] });
-    }
-    // --- Cargar perfil ---
-    function cargarPerfil() {
-        const usuario = localStorage.getItem('loggedUser');
-        if (!usuario) return;
-        const userData = JSON.parse(localStorage.getItem('user_' + usuario));
-        document.getElementById('perfil-usuario').textContent = userData.usuario || '';
-        document.getElementById('perfil-nombre').textContent = userData.nombre || '';
-        document.getElementById('perfil-email').textContent = userData.email || '';
-        // Foto de perfil
-        const foto = userData.fotoPerfil || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.nombre||userData.usuario)}`;
-        document.getElementById('perfil-foto').src = foto;
-        // Biografía editable
-        let bio = userData.bio || '';
-        let bioDiv = document.getElementById('perfil-bio');
-        if(!bioDiv) {
-            bioDiv = document.createElement('div');
-            bioDiv.id = 'perfil-bio';
-            document.getElementById('perfil-info').appendChild(bioDiv);
-        }
-        bioDiv.innerHTML = bio + ' <button id="editar-bio-btn">Editar biografía</button>';
-        document.getElementById('editar-bio-btn').onclick = function() {
-            const nuevoBio = prompt('Edita tu biografía:', bio);
-            if(nuevoBio !== null) {
-                userData.bio = nuevoBio;
-                localStorage.setItem('user_' + usuario, JSON.stringify(userData));
-                cargarPerfil();
-            }
-        };
-        // Seguidores/seguidos (simulado)
-        let seguidores = userData.seguidores || Math.floor(Math.random()*100+10);
-        let seguidos = userData.seguidos || Math.floor(Math.random()*50+5);
-        let segDiv = document.getElementById('seguidores');
-        if(!segDiv) {
-            segDiv = document.createElement('span');
-            segDiv.id = 'seguidores';
-            document.getElementById('perfil-info').appendChild(segDiv);
-        }
-        segDiv.textContent = seguidores + ' seguidores';
-        let seg2Div = document.getElementById('seguidos');
-        if(!seg2Div) {
-            seg2Div = document.createElement('span');
-            seg2Div.id = 'seguidos';
-            document.getElementById('perfil-info').appendChild(seg2Div);
-        }
-        seg2Div.textContent = seguidos + ' seguidos';
+        segDiv.innerHTML = `<span style='font-weight:bold;color:#b48be6;'><span style='font-size:1.2em;'>${userData.seguidores}</span> seguidores</span> <span style='font-weight:bold;color:#4caf50;'><span style='font-size:1.2em;'>${userData.seguidos}</span> seguidos</span>`;
         // Defectos personales (solo local)
         document.getElementById('defectos-text').value = userData.defectos || '';
     }
@@ -1137,68 +921,318 @@
         });
         observerFeed.observe(feedSection, { attributes: true, attributeFilter: ['style'] });
     }
-    // --- Buscador global interactivo ---
-    // (modificar el buscador para incluir datos de cuidado personal)
-    const buscadorSection = document.getElementById('buscador');
-    const busquedaGlobal = document.createElement('input');
-    busquedaGlobal.type = 'text';
-    busquedaGlobal.id = 'busqueda-global';
-    busquedaGlobal.placeholder = 'Buscar usuarios, productos, rutinas, recetas o información de cuidado personal...';
-    const resultadosGlobal = document.createElement('div');
-    resultadosGlobal.id = 'resultados-global';
-    if(buscadorSection) {
-        buscadorSection.appendChild(busquedaGlobal);
-        buscadorSection.appendChild(resultadosGlobal);
-        busquedaGlobal.addEventListener('input', function() {
-            const val = this.value.toLowerCase();
-            let html = '';
-            // Buscar usuarios
-            const usuarios = Object.keys(localStorage)
-                .filter(k => k.startsWith('user_'))
-                .map(k => JSON.parse(localStorage.getItem(k)));
-            const usuariosFiltrados = usuarios.filter(u => u.usuario.toLowerCase().includes(val) || (u.nombre && u.nombre.toLowerCase().includes(val)));
-            if(usuariosFiltrados.length) {
-                html += '<h3>Usuarios</h3><ul>' + usuariosFiltrados.map(u => `<li><b>${u.usuario}</b> <button onclick="verPerfilBuscado('${u.usuario}')">Ver perfil</button></li>`).join('') + '</ul>';
+    // --- BUSCADOR GLOBAL: Buscar usuarios, productos, rutinas y recetas (si existen) ---
+    const buscadorGlobal = document.getElementById('busqueda-global');
+    if(buscadorGlobal) {
+        buscadorGlobal.addEventListener('keydown', function(e) {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                if(this.value.trim() === '') {
+                    mostrarEjemplosBusqueda();
+                } else {
+                    realizarBusquedaGlobal(this.value.trim());
+                }
             }
-            // Buscar productos
-            const productosFiltrados = productosTienda.filter(p => p.nombre.toLowerCase().includes(val) || p.marca.toLowerCase().includes(val) || p.descripcion.toLowerCase().includes(val));
-            if(productosFiltrados.length) {
-                html += '<h3>Productos</h3>' + productosFiltrados.map(p => `<div class="producto" data-id="${p.id}">${renderProducto(p)}</div>`).join('');
-            }
-            // Buscar datos de cuidado personal
-            const datosFiltrados = datosCuidadoPersonal.filter(d =>
-                d.nombre.toLowerCase().includes(val) ||
-                d.categoria.toLowerCase().includes(val) ||
-                d.problemas.toLowerCase().includes(val) ||
-                d.soluciones.toLowerCase().includes(val) ||
-                d.productos.toLowerCase().includes(val) ||
-                d.marcas.toLowerCase().includes(val)
-            );
-            if(datosFiltrados.length) {
-                html += '<h3>Información de cuidado personal</h3>' + datosFiltrados.map(d => `
-                    <div class="producto" style="background:#fffbe7;box-shadow:none;border:1px solid #ffd28a;margin-bottom:1.2rem;">
-                        <h4 style="color:#7b3f00;">${d.nombre} <span style="font-size:0.9em;color:#888;">(${d.categoria})</span></h4>
-                        <p><b>Problema:</b> ${d.problemas}</p>
-                        <p><b>Solución:</b> ${d.soluciones}</p>
-                        <p><b>Productos:</b> ${d.productos}</p>
-                        <p><b>Marcas:</b> ${d.marcas}</p>
-                    </div>
-                `).join('');
-            }
-            // Rutinas y recetas ficticias
-            const rutinas = getRutinasEjemplo().filter(r => r.titulo.toLowerCase().includes(val) || r.descripcion.toLowerCase().includes(val));
-            if(rutinas.length) {
-                html += '<h3>Rutinas</h3>' + rutinas.map(r => renderPublicacion(r, 'rutina')).join('');
-            }
-            const recetas = getRecetasEjemplo().filter(r => r.titulo.toLowerCase().includes(val) || r.descripcion.toLowerCase().includes(val));
-            if(recetas.length) {
-                html += '<h3>Recetas</h3>' + recetas.map(r => renderPublicacion(r, 'receta')).join('');
-            }
-            resultadosGlobal.innerHTML = html || '<p>No hay resultados.</p>';
-            cargarResenas();
-            cargarInteraccionesFeed();
+        });
+        // Mostrar ejemplos al enfocar el input si está vacío
+        buscadorGlobal.addEventListener('focus', function() {
+            if(this.value.trim() === '') mostrarEjemplosBusqueda();
         });
     }
+    function mostrarEjemplosBusqueda() {
+        const cont = document.getElementById('resultados-global');
+        cont.innerHTML = `
+        <div style="color:#888;font-size:1.1em;margin-bottom:0.7em;">Ejemplos de búsqueda:</div>
+        <div class='resultado-usuario' style='padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><b>👤 María López</b> <span style='color:#888;'>(@marialopez)</span><br><span style='font-size:0.95em;color:#7b3f00;'>maria@mail.com</span></div>
+        <div class='resultado-usuario' style='padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><b>👤 Juan Pérez</b> <span style='color:#888;'>(@juanperez)</span><br><span style='font-size:0.95em;color:#7b3f00;'>juan@mail.com</span></div>
+        <div class='resultado-producto' style='display:flex;align-items:center;gap:1em;padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><img src='https://m.media-amazon.com/images/I/61QwQwQwQwL._AC_SY355_.jpg' alt='Centrum Multivitamínico' style='width:50px;height:50px;object-fit:cover;border-radius:6px;border:1px solid #ccc;'><div><b>Centrum Multivitamínico</b> <span style='color:#888;'>(Centrum)</span><br><span style='color:#4caf50;'>$15</span></div></div>
+        <div class='resultado-producto' style='display:flex;align-items:center;gap:1em;padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><img src='https://m.media-amazon.com/images/I/71pQwQwQwQL._AC_SY355_.jpg' alt='Shampoo Moroccanoil' style='width:50px;height:50px;object-fit:cover;border-radius:6px;border:1px solid #ccc;'><div><b>Shampoo Moroccanoil</b> <span style='color:#888;'>(Moroccanoil)</span><br><span style='color:#4caf50;'>$22</span></div></div>
+        <div class='resultado-producto' style='display:flex;align-items:center;gap:1em;padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><img src='https://m.media-amazon.com/images/I/61nQwQwQwQL._AC_SY355_.jpg' alt='Protector solar La Roche-Posay' style='width:50px;height:50px;object-fit:cover;border-radius:6px;border:1px solid #ccc;'><div><b>Protector solar La Roche-Posay</b> <span style='color:#888;'>(La Roche-Posay)</span><br><span style='color:#4caf50;'>$18</span></div></div>
+        <div class='resultado-rutina' style='padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><b>🧴 Rutina:</b> Rutina facial diaria<br><span style='font-size:0.95em;color:#7b3f00;'>Limpieza suave, tónico, sérum de vitamina C, hidratante y protector solar.</span></div>
+        <div class='resultado-rutina' style='padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><b>🧴 Rutina:</b> Rutina cabello hidratante<br><span style='font-size:0.95em;color:#7b3f00;'>Shampoo sin sulfatos, mascarilla Moroccanoil, aceite de argán en puntas.</span></div>
+        <div class='resultado-receta' style='padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><b>🍵 Receta:</b> Smoothie verde detox<br><span style='font-size:0.95em;color:#7b3f00;'>Espinaca, pepino, manzana verde, limón y agua de coco.</span></div>
+        <div class='resultado-receta' style='padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><b>🍵 Receta:</b> Ensalada de quinoa y aguacate<br><span style='font-size:0.95em;color:#7b3f00;'>Quinoa cocida, aguacate, tomate cherry, limón y semillas.</span></div>
+        `;
+    }
+    function realizarBusquedaGlobal(query) {
+        const resultados = [];
+        const queryLower = query.toLowerCase();
+        // Buscar usuarios
+        for(let key in localStorage) {
+            if(key.startsWith('user_')) {
+                const user = JSON.parse(localStorage.getItem(key));
+                if(
+                    (user.nombre && user.nombre.toLowerCase().includes(queryLower)) ||
+                    (user.usuario && user.usuario.toLowerCase().includes(queryLower)) ||
+                    (user.email && user.email.toLowerCase().includes(queryLower))
+                ) {
+                    resultados.push({tipo:'usuario', nombre:user.nombre, usuario:user.usuario, email:user.email});
+                }
+            }
+        }
+        // Buscar productos
+        let productosEncontrados = [];
+        if(typeof productosTienda !== 'undefined') {
+            productosTienda.forEach((prod, idx) => {
+                if(
+                    (prod.nombre && prod.nombre.toLowerCase().includes(queryLower)) ||
+                    (prod.marca && prod.marca.toLowerCase().includes(queryLower))
+                ) {
+                    const productoConIndice = {...prod, idx};
+                    resultados.push({tipo:'producto', nombre:prod.nombre, marca:prod.marca, precio:prod.precio, imagen:prod.imagen, idx});
+                    productosEncontrados.push(productoConIndice);
+                }
+            });
+        }
+        // Buscar rutinas y recetas si existen
+        if(typeof window.rutinasGuardadas !== 'undefined') {
+            window.rutinasGuardadas.forEach(rut => {
+                if(rut.nombre && rut.nombre.toLowerCase().includes(queryLower)) {
+                    resultados.push({tipo:'rutina', nombre:rut.nombre, descripcion:rut.descripcion||''});
+                }
+            });
+        }
+        if(typeof window.recetasGuardadas !== 'undefined') {
+            window.recetasGuardadas.forEach(rec => {
+                if(rec.nombre && rec.nombre.toLowerCase().includes(queryLower)) {
+                    resultados.push({tipo:'receta', nombre:rec.nombre, descripcion:rec.descripcion||''});
+                }
+            });
+        }
+        // Mostrar resultados
+        const cont = document.getElementById('resultados-global');
+        if(resultados.length === 0) {
+            cont.innerHTML = '<p style="color:#b48be6;">No se encontraron resultados.</p>';
+            return;
+        }
+        cont.innerHTML = resultados.map(res => {
+            if(res.tipo === 'usuario') {
+                return `<div class='resultado-usuario' style='padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><b>👤 ${res.nombre}</b> <span style='color:#888;'>(@${res.usuario})</span><br><span style='font-size:0.95em;color:#7b3f00;'>${res.email}</span></div>`;
+            } else if(res.tipo === 'producto') {
+                // Botón para ir a la tienda y resaltar el producto
+                return `<div class='resultado-producto' style='display:flex;align-items:center;gap:1em;padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><img src='${res.imagen}' alt='${res.nombre}' style='width:50px;height:50px;object-fit:cover;border-radius:6px;border:1px solid #ccc;'><div><b>${res.nombre}</b> <span style='color:#888;'>(${res.marca})</span><br><span style='color:#4caf50;'>$${res.precio}</span><br><button class='ir-tienda-btn' data-idx='${res.idx}' style='margin-top:0.5em;background:#b48be6;color:#fff;border:none;padding:0.3em 0.8em;border-radius:5px;cursor:pointer;'>Ver en tienda</button></div></div>`;
+            } else if(res.tipo === 'rutina') {
+                return `<div class='resultado-rutina' style='padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><b>🧴 Rutina:</b> ${res.nombre}<br><span style='font-size:0.95em;color:#7b3f00;'>${res.descripcion}</span></div>`;
+            } else if(res.tipo === 'receta') {
+                return `<div class='resultado-receta' style='padding:0.7em 0;border-bottom:1px solid #e9d8fd;'><b>🍵 Receta:</b> ${res.nombre}<br><span style='font-size:0.95em;color:#7b3f00;'>${res.descripcion}</span></div>`;
+            }
+            return '';
+        }).join('');
+        // Agregar evento a los botones "Ver en tienda"
+        setTimeout(()=>{
+            document.querySelectorAll('.ir-tienda-btn').forEach(btn => {
+                btn.onclick = function() {
+                    // Navegar a la tienda y resaltar el producto
+                    document.querySelectorAll('.main-section').forEach(sec => sec.style.display = 'none');
+                    const tiendaSec = document.getElementById('tienda');
+                    if(tiendaSec) tiendaSec.style.display = 'block';
+                    // Buscar el producto y hacer scroll o resaltar
+                    const idx = parseInt(this.getAttribute('data-idx'));
+                    if(typeof mostrarTiendaPersonalizada === 'function') {
+                        const usuario = localStorage.getItem('loggedUser');
+                        const userData = JSON.parse(localStorage.getItem('user_' + usuario));
+                        mostrarTiendaPersonalizada(userData, idx);
+                    }
+                };
+            });
+        }, 100);
+    }
+    // Modificar mostrarTiendaPersonalizada para resaltar producto si se pasa idx
+    function mostrarTiendaPersonalizada(userData, resaltarIdx) {
+        // ...existing code...
+        const cont = document.getElementById('productos-tienda');
+        if(!cont) return;
+        cont.innerHTML = '';
+        if(typeof productosTienda === 'undefined') return;
+        productosTienda.forEach((prod, idx) => {
+            let card = document.createElement('div');
+            card.className = 'producto-card';
+            card.style = 'background:#fff;border-radius:10px;box-shadow:0 2px 8px #e9d8fd;padding:1em;margin-bottom:1em;display:flex;gap:1em;align-items:center;transition:box-shadow 0.3s;';
+            if(resaltarIdx === idx) {
+                card.style.boxShadow = '0 0 0 4px #b48be6, 0 2px 8px #e9d8fd';
+                setTimeout(()=>{ card.scrollIntoView({behavior:'smooth', block:'center'}); }, 300);
+            }
+            card.innerHTML = `<img src='${prod.imagen}' alt='${prod.nombre}' style='width:70px;height:70px;object-fit:cover;border-radius:8px;border:1px solid #ccc;'><div><b>${prod.nombre}</b><br><span style='color:#888;'>${prod.marca}</span><br><span style='color:#4caf50;'>$${prod.precio}</span></div><button class='add-carrito-btn' data-idx='${idx}' style='margin-left:auto;background:#4caf50;color:#fff;border:none;padding:0.5em 1em;border-radius:5px;cursor:pointer;'>Añadir al carrito</button>`;
+            cont.appendChild(card);
+        });
+        // ...existing code para botones añadir al carrito...
+    }
+    // --- Ejemplos de rutinas y recetas para buscador global ---
+    window.rutinasGuardadas = [
+      {
+        nombre: 'Rutina facial diaria',
+        descripcion: 'Limpieza suave, tónico, sérum de vitamina C, hidratante y protector solar.'
+      },
+      {
+        nombre: 'Rutina cabello hidratante',
+        descripcion: 'Shampoo sin sulfatos, mascarilla Moroccanoil, aceite de argán en puntas.'
+      },
+      {
+        nombre: 'Rutina noche antiacné',
+        descripcion: 'Limpieza profunda, tratamiento con ácido salicílico, crema ligera oil-free.'
+      }
+    ];
+    window.recetasGuardadas = [
+      {
+        nombre: 'Smoothie verde detox',
+        descripcion: 'Espinaca, pepino, manzana verde, limón y agua de coco.'
+      },
+      {
+        nombre: 'Ensalada de quinoa y aguacate',
+        descripcion: 'Quinoa cocida, aguacate, tomate cherry, limón y semillas.'
+      },
+      {
+        nombre: 'Bowl de avena y frutos rojos',
+        descripcion: 'Avena cocida, leche vegetal, fresas, arándanos y semillas de chía.'
+      }
+    ];
+    // Ejemplo de productos para la tienda (puedes agregar más según tu preferencia)
+    window.productosTienda = [
+      {
+        nombre: 'Centrum Multivitamínico',
+        marca: 'Centrum',
+        precio: 15,
+        imagen: 'https://m.media-amazon.com/images/I/61QwQwQwQwL._AC_SY355_.jpg'
+      },
+      {
+        nombre: 'Shampoo Moroccanoil',
+        marca: 'Moroccanoil',
+        precio: 22,
+        imagen: 'https://m.media-amazon.com/images/I/71pQwQwQwQL._AC_SY355_.jpg'
+      },
+      {
+        nombre: 'Protector solar La Roche-Posay',
+        marca: 'La Roche-Posay',
+        precio: 18,
+        imagen: 'https://m.media-amazon.com/images/I/61nQwQwQwQL._AC_SY355_.jpg'
+      },
+      {
+        nombre: 'Crema hidratante CeraVe',
+        marca: 'CeraVe',
+        precio: 12,
+        imagen: 'https://m.media-amazon.com/images/I/61bQwQwQwQL._AC_SY355_.jpg'
+      },
+      {
+        nombre: 'Aceite de argán OGX',
+        marca: 'OGX',
+        precio: 10,
+        imagen: 'https://m.media-amazon.com/images/I/61cQwQwQwQL._AC_SY355_.jpg'
+      },
+      {
+        nombre: 'Mascarilla facial The Ordinary',
+        marca: 'The Ordinary',
+        precio: 14,
+        imagen: 'https://m.media-amazon.com/images/I/61dQwQwQwQL._AC_SY355_.jpg'
+      },
+      {
+        nombre: 'Suplemento de colágeno Vital Proteins',
+        marca: 'Vital Proteins',
+        precio: 28,
+        imagen: 'https://m.media-amazon.com/images/I/61eQwQwQwQL._AC_SY355_.jpg'
+      },
+      {
+        nombre: 'Tónico facial Neutrogena',
+        marca: 'Neutrogena',
+        precio: 9,
+        imagen: 'https://m.media-amazon.com/images/I/61fQwQwQwQL._AC_SY355_.jpg'
+      }
+    ];
+    // --- Animación de mariposas flotando (belleza y cuidado) ---
+    // Agrega varias mariposas SVG animadas en el fondo
+    const butterflyColors = ['#b48be6', '#7be6c7', '#e9d8fd', '#a3e6cb'];
+    function crearMariposaAnimada(idx) {
+        const butterfly = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        butterfly.setAttribute('class', 'butterfly-animada');
+        butterfly.setAttribute('viewBox', '0 0 64 64');
+        butterfly.style.position = 'fixed';
+        butterfly.style.left = Math.random()*100 + 'vw';
+        butterfly.style.top = Math.random()*90 + 'vh';
+        butterfly.style.width = '60px';
+        butterfly.style.height = '60px';
+        butterfly.style.pointerEvents = 'none';
+        butterfly.style.zIndex = '0';
+        butterfly.style.opacity = '0.7';
+        butterfly.innerHTML = `
+      <path d="M32 36C32 36 28 24 16 24C8 24 8 36 16 36C24 36 32 36 32 36Z" stroke="${butterflyColors[idx%butterflyColors.length]}" stroke-width="2.5" fill="#e9d8fd"/>
+      <path d="M32 36C32 36 36 24 48 24C56 24 56 36 48 36C40 36 32 36 32 36Z" stroke="${butterflyColors[(idx+1)%butterflyColors.length]}" stroke-width="2.5" fill="#e9d8fd"/>
+      <ellipse cx="32" cy="44" rx="8" ry="12" stroke="${butterflyColors[(idx+2)%butterflyColors.length]}" stroke-width="2.5" fill="#e9d8fd"/>
+      <circle cx="32" cy="36" r="2.5" fill="${butterflyColors[(idx+3)%butterflyColors.length]}"/>
+    `;
+        document.body.appendChild(butterfly);
+        // Animación flotante
+        const dur = 12 + Math.random()*8;
+        butterfly.animate([
+      { transform: `translateY(0px) scale(${0.8+Math.random()*0.5}) rotate(${Math.random()*30-15}deg)` },
+      { transform: `translateY(-60vh) scale(${0.8+Math.random()*0.5}) rotate(${Math.random()*30-15}deg)` }
+    ], {
+      duration: dur*1000,
+      iterations: Infinity,
+      direction: 'alternate',
+      easing: 'ease-in-out',
+      delay: Math.random()*5000
+    });
+    }
+    for(let i=0;i<7;i++) crearMariposaAnimada(i);
+    // --- Mascota animada: "Florita" (flor con carita feliz) ---
+    function crearMascotaFlorita() {
+    const florita = document.createElement('div');
+    florita.id = 'mascota-florita';
+    florita.innerHTML = `
+    <svg viewBox="0 0 120 120" width="90" height="90" style="display:block;">
+      <g>
+        <circle cx="60" cy="60" r="22" fill="#fff" stroke="#b48be6" stroke-width="3"/>
+        <ellipse cx="60" cy="30" rx="16" ry="10" fill="#b48be6" opacity="0.7"/>
+        <ellipse cx="60" cy="90" rx="16" ry="10" fill="#7be6c7" opacity="0.7"/>
+        <ellipse cx="30" cy="60" rx="10" ry="16" fill="#b48be6" opacity="0.7"/>
+        <ellipse cx="90" cy="60" rx="10" ry="16" fill="#7be6c7" opacity="0.7"/>
+        <circle cx="60" cy="60" r="15" fill="#ffe6fa"/>
+        <ellipse cx="54" cy="58" rx="2.5" ry="4" fill="#7b3f00"/>
+        <ellipse cx="66" cy="58" rx="2.5" ry="4" fill="#7b3f00"/>
+        <path d="M55 68 Q60 73 65 68" stroke="#7b3f00" stroke-width="2" fill="none"/>
+      </g>
+    </svg>
+    <div style="text-align:center;font-size:1.1em;color:#7b3f00;font-weight:bold;">¡Hola! Soy Florita 🌸</div>
+    `;
+    florita.style.position = 'fixed';
+    florita.style.bottom = '2.5vh';
+    florita.style.right = '2vw';
+    florita.style.zIndex = '1000';
+    florita.style.cursor = 'pointer';
+    florita.style.transition = 'transform 0.3s';
+    florita.onmouseenter = ()=>{ florita.style.transform = 'scale(1.12) rotate(-4deg)'; };
+    florita.onmouseleave = ()=>{ florita.style.transform = 'scale(1)'; };
+    document.body.appendChild(florita);
+    // Animación de rebote
+    florita.animate([
+      { transform: 'translateY(0px)' },
+      { transform: 'translateY(-12px)' },
+      { transform: 'translateY(0px)' }
+    ], {
+      duration: 2200,
+      iterations: Infinity,
+      easing: 'ease-in-out'
+    });
+    // Mensaje animado al hacer click
+    florita.onclick = ()=>{
+      const msg = document.createElement('div');
+      msg.textContent = '¡Recuerda cuidar tu piel y sonreír!';
+      msg.style.position = 'fixed';
+      msg.style.bottom = '8vh';
+      msg.style.right = '4vw';
+      msg.style.background = '#fff';
+      msg.style.color = '#b48be6';
+      msg.style.padding = '0.7em 1.2em';
+      msg.style.borderRadius = '16px';
+      msg.style.boxShadow = '0 2px 12px #e9d8fd';
+      msg.style.fontWeight = 'bold';
+      msg.style.fontSize = '1.1em';
+      msg.style.zIndex = '1001';
+      msg.style.opacity = '0.95';
+      document.body.appendChild(msg);
+      setTimeout(()=>{ msg.remove(); }, 2200);
+    };
+}
+crearMascotaFlorita();
     </script>
 </body>
 </html>
