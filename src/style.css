@@ -496,6 +496,42 @@ main {
   box-shadow: none;
   border: 1px solid #ffe5b4;
 }
+
+/* Animación de fade-in para bienvenida y posts del feed */
+#bienvenida-feed, .post {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) forwards;
+}
+#bienvenida-feed { animation-delay: 0.1s; }
+.post { animation-delay: 0.2s; }
+.post:nth-child(2) { animation-delay: 0.3s; }
+.post:nth-child(3) { animation-delay: 0.4s; }
+.post:nth-child(4) { animation-delay: 0.5s; }
+.post:nth-child(5) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Efecto hover amigable en posts */
+.post {
+    transition: box-shadow 0.3s, transform 0.2s;
+}
+.post:hover {
+    box-shadow: 0 6px 24px #b48be655, 0 1.5px 6px #b2f7ef55;
+    transform: translateY(-4px) scale(1.02);
+}
+
+/* Botón publicar animado */
+#form-nueva-publicacion button[type="submit"] {
+    transition: background 0.2s, transform 0.15s;
+}
+#form-nueva-publicacion button[type="submit"]:hover {
+    background: #a07bdc;
+    transform: scale(1.06);
+}
 @media (max-width: 700px) {
   #perfil-info {
     flex-direction: column;

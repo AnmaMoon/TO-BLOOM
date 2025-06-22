@@ -11,13 +11,41 @@
         <h1>florecer</h1>
         <div class="eslogan">La piel que mereces, el cuidado que necesitas</div>
         <nav class="main-nav">
-            <a href="feed.html">Feed</a>
+            <a href="feed.html" class="active">Inicio / Feed</a>
             <a href="tienda.html">Tienda</a>
-            <a href="perfil.html" class="active">Perfil</a>
-            <a href="index.html">Inicio</a>
+            <a href="perfil.html">Perfil</a>
         </nav>
     </header>
     <main>
+        <section id="feed" class="main-section" style="display:block">
+            <h2>Feed de la comunidad</h2>
+            <div id="bienvenida-feed" style="background:linear-gradient(90deg,#e9d8fd 60%,#b2f7ef 100%);padding:1.2rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;box-shadow:0 2px 8px #b48be655;display:flex;align-items:center;gap:1.5rem;">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=120&q=80" alt="Bienestar" style="width:90px;height:90px;border-radius:50%;object-fit:cover;">
+                <div>
+                    <h3 style="margin:0 0 0.3rem 0;">¡Bienvenido/a a florecer!</h3>
+                    <div style="font-size:1.1em;color:#7b3f00;font-style:italic;">La piel que mereces, el cuidado que necesitas</div>
+                    <div style="margin-top:0.5rem;color:#555;">Descubre rutinas diarias, productos y experiencias de la comunidad.</div>
+                </div>
+            </div>
+            <form id="form-nueva-publicacion" style="background:#f7f7f7;padding:1rem 1.5rem;border-radius:10px;margin-bottom:2rem;box-shadow:0 2px 8px #e9d8fd55;">
+                <h3 style="margin-top:0;">Comparte tu experiencia</h3>
+                <label>Producto:
+                    <input type="text" id="nuevo-producto" placeholder="Ej: Mascarilla hidratante Moroccanoil" required style="width:100%;margin-bottom:0.5rem;">
+                </label><br>
+                <label>¿Qué hiciste? (usaste, preparaste, realizaste...):
+                    <input type="text" id="nueva-accion" placeholder="Ej: usé, preparé, realicé" required style="width:100%;margin-bottom:0.5rem;">
+                </label><br>
+                <label>Comentario:
+                    <input type="text" id="nuevo-comentario" placeholder="¿Cómo te fue?" required style="width:100%;margin-bottom:0.5rem;">
+                </label><br>
+                <label>Imagen del producto (URL):
+                    <input type="url" id="nueva-imagen" placeholder="Pega la URL de la imagen" style="width:100%;margin-bottom:0.5rem;">
+                </label><br>
+                <button type="submit" style="background:#b48be6;color:#fff;padding:0.5rem 1.2rem;border:none;border-radius:6px;">Publicar</button>
+                <span id="msg-publicacion" style="color:green;display:none;margin-left:1rem;">¡Publicación agregada!</span>
+            </form>
+            <div class="feed"></div>
+        </section>
         <section id="perfil" class="main-section" style="display:block">
             <h2>Perfil</h2>
             <div id="perfil-info" style="display:flex;align-items:center;gap:2rem;">
@@ -52,5 +80,110 @@
         <p>&copy; 2025 florecer</p>
     </footer>
     <script src="perfil.js"></script>
+    <script>
+        // Redirigir al inicio si se refresca la página de perfil (siempre que no se acceda desde index)
+        if (window.performance && (performance.navigation.type === 1 || performance.getEntriesByType('navigation')[0]?.type === 'reload')) {
+            window.location.replace('index.html');
+        }
+
+        // Guardar y mostrar publicaciones del feed en localStorage
+        const publicacionesEjemplo = [
+            {
+                usuario: '@luz_bella',
+                accion: 'usó',
+                producto: 'Mascarilla hidratante Moroccanoil',
+                color: '#b48be6',
+                comentario: '¡Mi piel quedó super suave y luminosa! Repetiré esta rutina cada semana.',
+                avatar: 'https://randomuser.me/api/portraits/women/65.jpg',
+                imagen: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80'
+            },
+            {
+                usuario: '@carlos_fit',
+                accion: 'realizó',
+                producto: 'Rutina anticaída con Nioxin',
+                color: '#4caf50',
+                comentario: 'Después de 2 semanas, noto menos caída y más volumen. ¡Recomendado!',
+                avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+                imagen: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=300&q=80'
+            },
+            {
+                usuario: '@nutri_ale',
+                accion: 'preparó',
+                producto: 'Batido SlimFast',
+                color: '#388e3c',
+                comentario: 'Ideal para el desayuno, me da energía y ayuda a controlar el peso.',
+                avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+                imagen: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=300&q=80'
+            },
+            {
+                usuario: '@sofi_skin',
+                accion: 'usó',
+                producto: 'Limpiador facial Neutrogena',
+                color: '#b48be6',
+                comentario: '¡Me encantó la sensación fresca y limpia después de usarlo!',
+                avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+                imagen: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=300&q=80'
+            },
+            {
+                usuario: '@mario_bienestar',
+                accion: 'realizó',
+                producto: 'Rutina de hidratación con CeraVe',
+                color: '#4caf50',
+                comentario: 'Mi piel se ve mucho más saludable y suave. ¡Recomiendo la crema hidratante!',
+                avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+                imagen: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=300&q=80'
+            }
+        ];
+        if(!localStorage.getItem('feed_publicaciones')) {
+            localStorage.setItem('feed_publicaciones', JSON.stringify(publicacionesEjemplo));
+        }
+        function renderFeed() {
+            const feed = JSON.parse(localStorage.getItem('feed_publicaciones') || '[]');
+            const cont = document.querySelector('.feed');
+            if(!cont) return;
+            cont.innerHTML = feed.map(pub => `
+                <article class="post" style="display:flex;align-items:flex-start;gap:1.2rem;margin-bottom:1.5rem;background:#fff;border-radius:12px;box-shadow:0 2px 8px #e9d8fd33;padding:1rem;">
+                    <img src="${pub.avatar}" alt="avatar" style="width:70px;height:70px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+                    <div style="flex:1;">
+                        <b>${pub.usuario}</b> <span style="color:${pub.color};">${pub.accion}</span> <b>${pub.producto}</b><br>
+                        <span style="font-size:0.95em;color:#555;">"${pub.comentario}"</span>
+                        <div style="margin-top:0.7rem;"><img src="${pub.imagen}" alt="${pub.producto}" style="width:120px;height:90px;object-fit:cover;border-radius:10px;"></div>
+                    </div>
+                </article>
+            `).join('');
+        }
+        document.addEventListener('DOMContentLoaded', renderFeed);
+
+        // Lógica para agregar nuevas publicaciones al feed
+        const formNueva = document.getElementById('form-nueva-publicacion');
+        if(formNueva) {
+            formNueva.onsubmit = function(e) {
+                e.preventDefault();
+                const producto = document.getElementById('nuevo-producto').value.trim();
+                const accion = document.getElementById('nueva-accion').value.trim();
+                const comentario = document.getElementById('nuevo-comentario').value.trim();
+                const imagen = document.getElementById('nueva-imagen').value.trim() || 'https://via.placeholder.com/120x90?text=Producto';
+                if(!producto || !accion || !comentario) return;
+                // Obtener usuario actual (simulado o de perfil)
+                let usuario = localStorage.getItem('loggedUser') || '@usuario';
+                if(usuario && usuario[0] !== '@') usuario = '@' + usuario;
+                // Avatar simulado
+                let avatar = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(usuario.replace('@',''));
+                // Color por acción
+                let color = '#b48be6';
+                if(accion.toLowerCase().includes('realiz')) color = '#4caf50';
+                if(accion.toLowerCase().includes('prepar')) color = '#388e3c';
+                // Guardar en localStorage
+                const nuevaPub = {usuario, accion, producto, color, comentario, avatar, imagen};
+                let feed = JSON.parse(localStorage.getItem('feed_publicaciones') || '[]');
+                feed.unshift(nuevaPub); // Añadir al inicio
+                localStorage.setItem('feed_publicaciones', JSON.stringify(feed));
+                document.getElementById('msg-publicacion').style.display = 'inline';
+                setTimeout(()=>{document.getElementById('msg-publicacion').style.display='none';}, 2000);
+                formNueva.reset();
+                renderFeed();
+            };
+        }
+    </script>
 </body>
 </html>

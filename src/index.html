@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>florecer</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>florecer</title>
+        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 36C32 36 28 24 16 24C8 24 8 36 16 36C24 36 32 36 32 36Z' stroke='%23b48be6' stroke-width='2.5' fill='%23e9d8fd'/%3E%3Cpath d='M32 36C32 36 36 24 48 24C56 24 56 36 48 36C40 36 32 36 32 36Z' stroke='%23b48be6' stroke-width='2.5' fill='%23e9d8fd'/%3E%3Cellipse cx='32' cy='44' rx='8' ry='12' stroke='%23b48be6' stroke-width='2.5' fill='%23e9d8fd'/%3E%3Ccircle cx='32' cy='36' r='2.5' fill='%23b48be6'/%3E%3C/svg%3E" />
+        <link rel="stylesheet" href="style.css">
+    </head>
 <body>
     <div id="auth-container">
         <div id="login-form" class="auth-form">
@@ -13,6 +14,8 @@
             <form>
                 <label for="login-user">Usuario o Email:</label>
                 <input type="text" id="login-user" required>
+                <div style="height:0.5rem;"></div>
+                <hr style="border:none;border-top:1px solid #e9d8fd;margin:0.7rem 0 1rem 0;width:100%;background:transparent;">
                 <label for="login-password">Contraseña:</label>
                 <input type="password" id="login-password" required>
                 <label style="display:flex;align-items:center;margin-top:1rem;">
@@ -30,12 +33,15 @@
             <form>
                 <label for="register-nombre">Nombre:</label>
                 <input type="text" id="register-nombre" required>
+                <div style="height:0.5rem;"></div>
                 <label for="register-apellidos">Apellidos:</label>
                 <input type="text" id="register-apellidos" required>
+                <hr style="border:none;border-top:1px solid #e9d8fd;margin:0.7rem 0 1rem 0;width:100%;background:transparent;">
                 <label for="register-user">Usuario:</label>
                 <input type="text" id="register-user" required>
                 <label for="register-email">Email:</label>
                 <input type="email" id="register-email" required>
+                <hr style="border:none;border-top:1px solid #e9d8fd;margin:0.7rem 0 1rem 0;width:100%;background:transparent;">
                 <label for="register-password">Contraseña:</label>
                 <input type="password" id="register-password" required>
                 <label for="register-password2">Verificar contraseña:</label>
